@@ -6,7 +6,7 @@ setup(
     name='django-tinycontent',
     version=tinycontent.__version__,
     description="A Django app for managing re-usable blocks of tiny content.",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     author='Dominic Rodger',
     author_email='internet@dominicrodger.com',
     url='http://github.com/dominicrodger/django-tinycontent',
