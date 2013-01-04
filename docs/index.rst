@@ -28,4 +28,7 @@ found, use::
     This will be shown if no matching object is found.
     {% endtinycontent %}
 
+The name of the content block can also be a context variable, using
+both the simple and the complex variants.
+
 .. _django-boxes: https://github.com/eldarion/django-boxes
