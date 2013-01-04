@@ -16,4 +16,9 @@ setup(
     install_requires=[
         "Django==1.4.3",
     ],
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Framework :: Django',
+        'License :: OSI Approved :: BSD License',
+    ],
 )
