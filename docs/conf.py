@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 #
 # django-tinycontent documentation build configuration file, created by
 # sphinx-quickstart on Fri Jan  4 17:20:42 2013.
