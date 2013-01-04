@@ -109,3 +109,11 @@ class TinyContentTestCase(unittest.TestCase):
         with self.assertRaises(TemplateSyntaxError):
             render_template(t)
 
+    def testBadArguments(self):
+        t = ("{% tinycontent 'foo %}{% endtinycontent %}")
+        with self.assertRaises(TemplateSyntaxError):
+            render_template(t)
+
+        t = ('{% tinycontent "foo %}{% endtinycontent %}')
+        with self.assertRaises(TemplateSyntaxError):
+            render_template(t)

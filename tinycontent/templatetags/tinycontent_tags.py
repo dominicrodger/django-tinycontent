@@ -24,7 +24,7 @@ class TinyContentNode(template.Node):
         if self.content_name[0] == "'" and self.content_name[-1] == "'":
             return self.content_name[1:-1]
 
-        return self.content_name
+        raise TemplateSyntaxError("Unclosed argument to tinycontent.")
 
     def render(self, context):
         try:
