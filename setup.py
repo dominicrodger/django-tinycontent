@@ -21,4 +21,8 @@ setup(
         'Framework :: Django',
         'License :: OSI Approved :: BSD License',
     ],
+    tests_require=(
+       'django-setuptest==0.1.2',
+    ),
+    test_suite='setuptest.setuptest.SetupTestSuite',
 )

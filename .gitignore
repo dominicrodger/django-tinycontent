@@ -2,3 +2,6 @@
 django_tinycontent.egg-info/
 docs/_build/
 dist/
+*.egg/
+pep8.txt
+coverage.xml
