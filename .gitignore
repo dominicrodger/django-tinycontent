@@ -1,3 +1,4 @@
 *.pyc
 django_tinycontent.egg-info/
 docs/_build/
+dist/
