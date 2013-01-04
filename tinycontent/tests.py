@@ -21,19 +21,19 @@ class TinyContentTestCase(unittest.TestCase):
         TinyContent.objects.get_or_create(name='foobar',
                                           content='This is a test.')
 
-    def testUnicode(self):
+    def test_unicode(self):
         self.assertEqual("foobar",
                          unicode(TinyContent.objects.get(name='foobar')))
 
-    def testNonExistent(self):
+    def test_non_existent(self):
         self.assertEqual("",
                          render_template("{% tinycontent_simple 'foo' %}"))
 
-    def testSimpleExistent(self):
+    def test_simple_existent(self):
         self.assertEqual("This is a test.",
                          render_template("{% tinycontent_simple 'foobar' %}"))
 
-    def testAlternateTextIfNotFound(self):
+    def test_alternate_text_if_not_found(self):
         t = ("{% tinycontent 'neverexists' %}"
              "I could not find it."
              "{% endtinycontent %}")
@@ -41,7 +41,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("I could not find it.",
                          render_template(t))
 
-    def testAlternateTextIfFound(self):
+    def test_alternate_text_if_found(self):
         t = ("{% tinycontent 'foobar' %}"
              "I could not find it."
              "{% endtinycontent %}")
@@ -49,7 +49,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("This is a test.",
                          render_template(t))
 
-    def testAlternateTextIfFoundDoubleQuotes(self):
+    def test_alternate_text_if_found_double_quotes(self):
         t = ('{% tinycontent "foobar" %}'
              'I could not find it.'
              '{% endtinycontent %}')
@@ -57,7 +57,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("This is a test.",
                          render_template(t))
 
-    def testAlternateTextIfNotFoundSupportsOtherTags(self):
+    def test_alternate_text_if_not_found_with_embedded_tags(self):
         t = ("{% tinycontent 'neverexists' %}"
              "I could not find {{ meaning }}."
              "{% endtinycontent %}")
@@ -67,7 +67,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("I could not find 42.",
                          render_template_with_context(t, ctx))
 
-    def testAllowsContextVariablesAsContentName(self):
+    def test_allows_context_variables_as_content_names_from_simple(self):
         t = ("{% tinycontent_simple content_name %}")
 
         ctx = {'content_name': 'foobar'}
@@ -75,7 +75,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("This is a test.",
                          render_template_with_context(t, ctx))
 
-    def testAllowsContextVariablesAsContentNameFromComplex(self):
+    def test_allows_context_variables_as_content_names_from_complex(self):
         t = ("{% tinycontent content_name %}"
              "Text if empty."
              "{% endtinycontent %}")
@@ -85,7 +85,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("This is a test.",
                          render_template_with_context(t, ctx))
 
-    def testAllowsUnprovidedContextVariablesAsContentNameFromComplex(self):
+    def test_allows_unprovided_context_variables_as_content_name_from_complex(self):
         t = ("{% tinycontent content_name %}"
              "Text if empty."
              "{% endtinycontent %}")
@@ -93,18 +93,18 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("Text if empty.",
                          render_template(t))
 
-    def testAllowsUnprovidedContextVariablesAsContentNameFromSimple(self):
+    def test_allows_unprovided_context_variables_as_content_name_from_simple(self):
         t = ("{% tinycontent_simple content_name %}")
 
         self.assertEqual("",
                          render_template(t))
 
-    def testWrongNumberOfArguments(self):
+    def test_wrong_number_of_arguments(self):
         t = ("{% tinycontent %}{% endtinycontent %}")
         with self.assertRaises(TemplateSyntaxError):
             render_template(t)
 
-    def testBadArguments(self):
+    def test_bad_arguments(self):
         t = ("{% tinycontent 'foo %}{% endtinycontent %}")
         with self.assertRaises(TemplateSyntaxError):
             render_template(t)
