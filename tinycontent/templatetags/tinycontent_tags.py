@@ -7,5 +7,8 @@ register = template.Library()
 
 @register.simple_tag
 def tinycontent(name):
-    obj = TinyContent.objects.get(name=name)
-    return obj.content
+    try:
+        obj = TinyContent.objects.get(name=name)
+        return obj.content
+    except TinyContent.DoesNotExist:
+        return ''
