@@ -13,7 +13,7 @@ Installation is simple::
 
 Add ``tinycontent`` to your ``INSTALLED_APPS``.
 
-Usage is simple::
+Usage in templates is simple::
 
     {% load tinycontent_tags %}
 
@@ -30,5 +30,11 @@ found, use::
 
 The name of the content block can also be a context variable, using
 both the simple and the complex variants.
+
+Content blocks themselves can be added and edited using Django's admin
+interface. If a block with the name given in the template tag cannot
+be found, either nothing is rendered (if using
+``tinycontent_simple``), or the text between ``tinycontent`` and
+``endtinycontent`` is rendered (if using the more complex variant).
 
 .. _django-boxes: https://github.com/eldarion/django-boxes
