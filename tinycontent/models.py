@@ -2,7 +2,7 @@ from django.db import models
 
 
 class TinyContent(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
+    name = models.CharField(max_length=100, unique=True)
     content = models.TextField()
 
     def __unicode__(self):
