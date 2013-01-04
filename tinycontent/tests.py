@@ -17,14 +17,15 @@ def render_template_with_context(input, context):
 
 
 class TinyContentTestCase(unittest.TestCase):
+    def setUp(self):
+        TinyContent.objects.get_or_create(name='foobar',
+                                          content='This is a test.')
+
     def testNonExistent(self):
         self.assertEqual("",
-                         render_template("{% tinycontent_simple 'foobar' %}"))
+                         render_template("{% tinycontent_simple 'foo' %}"))
 
     def testSimpleExistent(self):
-        TinyContent.objects.create(name='foobar',
-                                   content='This is a test.')
-
         self.assertEqual("This is a test.",
                          render_template("{% tinycontent_simple 'foobar' %}"))
 
@@ -37,25 +38,19 @@ class TinyContentTestCase(unittest.TestCase):
                          render_template(t))
 
     def testAlternateTextIfFound(self):
-        TinyContent.objects.create(name='test_name',
-                                   content='This should be found.')
-
-        t = ("{% tinycontent 'test_name' %}"
+        t = ("{% tinycontent 'foobar' %}"
              "I could not find it."
              "{% endtinycontent %}")
 
-        self.assertEqual("This should be found.",
+        self.assertEqual("This is a test.",
                          render_template(t))
 
     def testAlternateTextIfFoundDoubleQuotes(self):
-        TinyContent.objects.create(name='test_name_double',
-                                   content='This should be found.')
-
-        t = ('{% tinycontent "test_name_double" %}'
+        t = ('{% tinycontent "foobar" %}'
              'I could not find it.'
              '{% endtinycontent %}')
 
-        self.assertEqual("This should be found.",
+        self.assertEqual("This is a test.",
                          render_template(t))
 
     def testAlternateTextIfNotFoundSupportsOtherTags(self):
@@ -69,25 +64,21 @@ class TinyContentTestCase(unittest.TestCase):
                          render_template_with_context(t, ctx))
 
     def testAllowsContextVariablesAsContentName(self):
-        TinyContent.objects.create(name='variable_name',
-                                   content='This is a variable test.')
         t = ("{% tinycontent_simple content_name %}")
 
-        ctx = {'content_name': 'variable_name'}
+        ctx = {'content_name': 'foobar'}
 
-        self.assertEqual("This is a variable test.",
+        self.assertEqual("This is a test.",
                          render_template_with_context(t, ctx))
 
     def testAllowsContextVariablesAsContentNameFromComplex(self):
-        TinyContent.objects.create(name='another_variable',
-                                   content='This is another variable test.')
         t = ("{% tinycontent content_name %}"
              "Text if empty."
              "{% endtinycontent %}")
 
-        ctx = {'content_name': 'another_variable'}
+        ctx = {'content_name': 'foobar'}
 
-        self.assertEqual("This is another variable test.",
+        self.assertEqual("This is a test.",
                          render_template_with_context(t, ctx))
 
     def testAllowsUnprovidedContextVariablesAsContentNameFromComplex(self):
