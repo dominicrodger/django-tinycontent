@@ -21,6 +21,10 @@ class TinyContentTestCase(unittest.TestCase):
         TinyContent.objects.get_or_create(name='foobar',
                                           content='This is a test.')
 
+    def testUnicode(self):
+        self.assertEqual("foobar",
+                         unicode(TinyContent.objects.get(name='foobar')))
+
     def testNonExistent(self):
         self.assertEqual("",
                          render_template("{% tinycontent_simple 'foo' %}"))
