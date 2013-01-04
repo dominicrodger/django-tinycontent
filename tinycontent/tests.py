@@ -1,4 +1,5 @@
 from django.template import Context, Template
+from django.template.base import TemplateSyntaxError
 from tinycontent.models import TinyContent
 import unittest
 
@@ -102,3 +103,9 @@ class TinyContentTestCase(unittest.TestCase):
 
         self.assertEqual("",
                          render_template(t))
+
+    def testWrongNumberOfArguments(self):
+        t = ("{% tinycontent %}{% endtinycontent %}")
+        with self.assertRaises(TemplateSyntaxError):
+            render_template(t)
+
