@@ -85,7 +85,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("This is a test.",
                          render_template_with_context(t, ctx))
 
-    def test_allows_unprovided_context_variables_as_content_name_from_complex(self):
+    def test_allows_unprovided_ctx_variables_as_content_name_complex(self):
         t = ("{% tinycontent content_name %}"
              "Text if empty."
              "{% endtinycontent %}")
@@ -93,7 +93,7 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("Text if empty.",
                          render_template(t))
 
-    def test_allows_unprovided_context_variables_as_content_name_from_simple(self):
+    def test_allows_unprovided_ctx_variables_as_content_name_simple(self):
         t = ("{% tinycontent_simple content_name %}")
 
         self.assertEqual("",
