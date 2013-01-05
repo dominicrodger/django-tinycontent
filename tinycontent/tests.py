@@ -18,6 +18,12 @@ def render_template_with_context(input, context):
     return t.render(c).strip()
 
 
+def render_for_test_user(t):
+    user = User.objects.get(username='dom')
+    ctx = {'user': user, 'perms': PermWrapper(user), }
+    return render_template_with_context(t, ctx)
+
+
 class TinyContentTestCase(unittest.TestCase):
     def setUp(self):
         TinyContent.objects.get_or_create(name='foobar',
@@ -148,11 +154,6 @@ class TinyContentTestCase(unittest.TestCase):
             render_template(t)
 
     def test_with_user(self):
-        def render_for_test_user(t):
-            user = User.objects.get(username='dom')
-            ctx = {'user': user, 'perms': PermWrapper(user), }
-            return render_template_with_context(t, ctx)
-
         user, is_new_user = User.objects.get_or_create(username='dom')
 
         t = ("{% tinycontent 'foobar' %}"
