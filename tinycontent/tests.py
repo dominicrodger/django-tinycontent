@@ -29,6 +29,8 @@ class TinyContentTestCase(unittest.TestCase):
     def setUp(self):
         TinyContent.objects.get_or_create(name='foobar',
                                           content='This is a test.')
+        TinyContent.objects.get_or_create(name='html',
+                                          content='<strong>&amp;</strong>')
 
     def test_unicode(self):
         self.assertEqual("foobar",
@@ -207,3 +209,13 @@ class TinyContentTestCase(unittest.TestCase):
         rendered = render_for_test_user(t)
         self.assertTrue('%s?name=notthere' % root_add_url in rendered)
         self.assertTrue('Add' in rendered)
+
+    def test_with_html_simple(self):
+        self.assertEqual("<strong>&amp;</strong>",
+                         render_template("{% tinycontent_simple 'html' %}"))
+
+    def test_with_html_complex(self):
+        self.assertEqual("<strong>&amp;</strong>",
+                         render_template("{% tinycontent 'html' %}"
+                                         "Not found."
+                                         "{% endtinycontent %}"))

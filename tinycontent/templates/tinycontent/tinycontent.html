@@ -1,4 +1,4 @@
-{{ obj.content }}
+{{ obj.content|safe }}
 
 {% if perms.tinycontent.change_tinycontent %}
 {% load url from future %}
