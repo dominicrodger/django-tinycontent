@@ -6,5 +6,9 @@ DATABASES = {
 }
 
 INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'tinycontent',
 )
+
+ROOT_URLCONF = 'test_urls'

@@ -17,7 +17,8 @@ class TinyContentNode(template.Node):
             name = self.content_name.resolve(context)
             obj = TinyContent.objects.get(name=name)
             return render_to_string('tinycontent/tinycontent.html',
-                                    {'obj': obj})
+                                    {'obj': obj},
+                                    context)
         except TinyContent.DoesNotExist:
             return self.nodelist.render(context)
 
@@ -37,11 +38,12 @@ def tinycontent(parser, token):
     return TinyContentNode(content_name, nodelist)
 
 
-@register.simple_tag
-def tinycontent_simple(name):
+@register.simple_tag(takes_context=True)
+def tinycontent_simple(context, name):
     try:
         obj = TinyContent.objects.get(name=name)
         return render_to_string('tinycontent/tinycontent.html',
-                                {'obj': obj})
+                                {'obj': obj},
+                                context)
     except TinyContent.DoesNotExist:
         return ''

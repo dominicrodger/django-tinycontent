@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User, Permission
+from django.contrib.auth.context_processors import PermWrapper
 from django.template import Context, Template
 from django.template.base import TemplateSyntaxError
 from tinycontent.models import TinyContent
@@ -144,3 +146,27 @@ class TinyContentTestCase(unittest.TestCase):
         t = ('{% tinycontent "foo %}{% endtinycontent %}')
         with self.assertRaises(TemplateSyntaxError):
             render_template(t)
+
+    def test_with_user(self):
+        def render_for_test_user(t):
+            user = User.objects.get(username='dom')
+            ctx = {'user': user, 'perms': PermWrapper(user), }
+            return render_template_with_context(t, ctx)
+
+        user, is_new_user = User.objects.get_or_create(username='dom')
+
+        t = ("{% tinycontent 'foobar' %}"
+             "Text if empty."
+             "{% endtinycontent %}")
+
+        self.assertEqual("This is a test.",
+                         render_for_test_user(t))
+
+        perm = Permission.objects.get(codename='change_tinycontent')
+        user.user_permissions.add(perm)
+        user.save()
+
+        rendered = render_for_test_user(t)
+        self.assertTrue('/admin/tinycontent/tinycontent/1/' in rendered)
+        self.assertTrue('Edit' in rendered)
+        self.assertTrue("This is a test." in rendered)
