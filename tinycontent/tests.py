@@ -171,3 +171,9 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertTrue('/admin/tinycontent/tinycontent/1/' in rendered)
         self.assertTrue('Edit' in rendered)
         self.assertTrue("This is a test." in rendered)
+
+        t = "{% tinycontent_simple 'foobar' %}"
+        rendered = render_for_test_user(t)
+        self.assertTrue('/admin/tinycontent/tinycontent/1/' in rendered)
+        self.assertTrue('Edit' in rendered)
+        self.assertTrue("This is a test." in rendered)
