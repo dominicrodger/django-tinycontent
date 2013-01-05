@@ -1,0 +1,4 @@
+{% if perms.tinycontent.add_tinycontent %}
+{% load url from future %}
+(No content defined: <a href="{% url 'admin:tinycontent_tinycontent_add' %}?name={{ name|urlencode }}" title="Add content here">Add some</a>)
+{% endif %}

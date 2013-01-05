@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.context_processors import PermWrapper
+from django.core.urlresolvers import reverse
 from django.template import Context, Template
 from django.template.base import TemplateSyntaxError
 from tinycontent.models import TinyContent
@@ -177,3 +178,29 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertTrue('/admin/tinycontent/tinycontent/1/' in rendered)
         self.assertTrue('Edit' in rendered)
         self.assertTrue("This is a test." in rendered)
+
+    def test_with_user_for_nonexistent_tag(self):
+        user, is_new_user = User.objects.get_or_create(username='dom')
+
+        t = ("{% tinycontent 'notthere' %}"
+             "Text if empty."
+             "{% endtinycontent %}")
+
+        self.assertEqual("Text if empty.",
+                         render_for_test_user(t))
+
+        perm = Permission.objects.get(codename='add_tinycontent')
+        user.user_permissions.add(perm)
+        user.save()
+
+        root_add_url = reverse('admin:tinycontent_tinycontent_add')
+
+        rendered = render_for_test_user(t)
+        self.assertTrue('%s?name=notthere' % root_add_url in rendered)
+        self.assertTrue('Add' in rendered)
+        self.assertTrue("Text if empty." in rendered)
+
+        t = "{% tinycontent_simple 'notthere' %}"
+        rendered = render_for_test_user(t)
+        self.assertTrue('%s?name=notthere' % root_add_url in rendered)
+        self.assertTrue('Add' in rendered)

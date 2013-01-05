@@ -20,7 +20,11 @@ class TinyContentNode(template.Node):
                                     {'obj': obj},
                                     context)
         except TinyContent.DoesNotExist:
-            return self.nodelist.render(context)
+            rval = self.nodelist.render(context)
+            rval += render_to_string('tinycontent/tinycontent_add.html',
+                                     {'name': name},
+                                     context)
+            return rval
 
 
 @register.tag
@@ -46,4 +50,6 @@ def tinycontent_simple(context, name):
                                 {'obj': obj},
                                 context)
     except TinyContent.DoesNotExist:
-        return ''
+        return render_to_string('tinycontent/tinycontent_add.html',
+                                {'name': name},
+                                context)
