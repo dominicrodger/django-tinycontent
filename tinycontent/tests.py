@@ -168,14 +168,17 @@ class TinyContentTestCase(unittest.TestCase):
         user.user_permissions.add(perm)
         user.save()
 
+        root_edit_url = reverse('admin:tinycontent_tinycontent_change',
+                                args=[1, ])
+
         rendered = render_for_test_user(t)
-        self.assertTrue('/admin/tinycontent/tinycontent/1/' in rendered)
+        self.assertTrue(root_edit_url in rendered)
         self.assertTrue('Edit' in rendered)
         self.assertTrue("This is a test." in rendered)
 
         t = "{% tinycontent_simple 'foobar' %}"
         rendered = render_for_test_user(t)
-        self.assertTrue('/admin/tinycontent/tinycontent/1/' in rendered)
+        self.assertTrue(root_edit_url in rendered)
         self.assertTrue('Edit' in rendered)
         self.assertTrue("This is a test." in rendered)
 
