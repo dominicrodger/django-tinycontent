@@ -22,7 +22,7 @@ setup(
         'License :: OSI Approved :: BSD License',
     ],
     tests_require=(
-       'django-setuptest==0.1.2',
+        'django-setuptest==0.1.2',
     ),
     test_suite='setuptest.setuptest.SetupTestSuite',
 )
