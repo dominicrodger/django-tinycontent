@@ -7,13 +7,13 @@ import unittest
 def render_template(input):
     t = Template("{% load tinycontent_tags %}" + input)
     c = Context()
-    return t.render(c)
+    return t.render(c).strip()
 
 
 def render_template_with_context(input, context):
     t = Template("{% load tinycontent_tags %}" + input)
     c = Context(context)
-    return t.render(c)
+    return t.render(c).strip()
 
 
 class TinyContentTestCase(unittest.TestCase):
