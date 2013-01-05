@@ -16,7 +16,7 @@ class TinyContentNode(template.Node):
             try:
                 return context[self.content_name]
             except KeyError:
-                return ''
+                raise TinyContent.DoesNotExist
 
         if self.content_name[0] == '"' and self.content_name[-1] == '"':
             return self.content_name[1:-1]
