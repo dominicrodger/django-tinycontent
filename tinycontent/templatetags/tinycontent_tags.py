@@ -1,5 +1,6 @@
 from django import template
 from django.template.base import TemplateSyntaxError
+from django.template.loader import render_to_string
 from tinycontent.models import TinyContent
 
 
@@ -15,7 +16,8 @@ class TinyContentNode(template.Node):
         try:
             name = self.content_name.resolve(context)
             obj = TinyContent.objects.get(name=name)
-            return obj.content
+            return render_to_string('tinycontent/tinycontent.html',
+                                    {'obj': obj})
         except TinyContent.DoesNotExist:
             return self.nodelist.render(context)
 
@@ -39,6 +41,7 @@ def tinycontent(parser, token):
 def tinycontent_simple(name):
     try:
         obj = TinyContent.objects.get(name=name)
-        return obj.content
+        return render_to_string('tinycontent/tinycontent.html',
+                                {'obj': obj})
     except TinyContent.DoesNotExist:
         return ''
