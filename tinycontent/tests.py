@@ -117,6 +117,20 @@ class TinyContentTestCase(unittest.TestCase):
         self.assertEqual("",
                          render_template(t))
 
+    def test_ctx_variables_with_name_of_content_complex(self):
+        t = ("{% tinycontent foobar %}"
+             "Text if empty."
+             "{% endtinycontent %}")
+
+        self.assertEqual("Text if empty.",
+                         render_template(t))
+
+    def test_ctx_variables_with_name_of_content_simple(self):
+        t = ("{% tinycontent_simple foobar %}")
+
+        self.assertEqual("",
+                         render_template(t))
+
     def test_wrong_number_of_arguments(self):
         t = ("{% tinycontent %}{% endtinycontent %}")
         with self.assertRaises(TemplateSyntaxError):
