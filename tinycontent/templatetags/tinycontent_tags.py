@@ -11,24 +11,9 @@ class TinyContentNode(template.Node):
         self.content_name = content_name
         self.nodelist = nodelist
 
-    def get_content_name(self, context):
-        if self.content_name[0] != '"' and self.content_name[0] != "'":
-            try:
-                return context[self.content_name]
-            except KeyError:
-                raise TinyContent.DoesNotExist
-
-        if self.content_name[0] == '"' and self.content_name[-1] == '"':
-            return self.content_name[1:-1]
-
-        if self.content_name[0] == "'" and self.content_name[-1] == "'":
-            return self.content_name[1:-1]
-
-        raise TemplateSyntaxError("Unclosed argument to tinycontent.")
-
     def render(self, context):
         try:
-            name = self.get_content_name(context)
+            name = self.content_name.resolve(context)
             obj = TinyContent.objects.get(name=name)
             return obj.content
         except TinyContent.DoesNotExist:
@@ -43,7 +28,7 @@ def tinycontent(parser, token):
         raise TemplateSyntaxError("'tinycontent' tag takes exactly one"
                                   " argument.")
 
-    content_name = args[1]
+    content_name = parser.compile_filter(args[1])
 
     nodelist = parser.parse(('endtinycontent',))
     parser.delete_first_token()
