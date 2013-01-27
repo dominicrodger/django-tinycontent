@@ -31,4 +31,8 @@ be found, either nothing is rendered (if using
 ``tinycontent_simple``), or the text between ``tinycontent`` and
 ``endtinycontent`` is rendered (if using the more complex variant).
 
+django-tinycontent supports Django 1.4 and Django 1.5. I've only
+tested it on Python 2.7, patches to fix any issues you find with
+Python 3 compatibility would be very welcome.
+
 .. _django-boxes: https://github.com/eldarion/django-boxes
