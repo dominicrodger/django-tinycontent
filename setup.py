@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        "Django==1.4.3",
+        "Django>=1.4.3",
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
