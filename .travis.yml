@@ -3,5 +3,6 @@ python:
   - "2.7"
 env:
   - DJANGO=1.4.3
+  - DJANGO=1.5.1
 script:
   - python setup.py test
