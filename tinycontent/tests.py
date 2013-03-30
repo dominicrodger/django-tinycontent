@@ -32,9 +32,9 @@ class TinyContentTestCase(unittest.TestCase):
         TinyContent.objects.get_or_create(name='html',
                                           content='<strong>&amp;</strong>')
 
-    def test_unicode(self):
+    def test_str(self):
         self.assertEqual("foobar",
-                         unicode(TinyContent.objects.get(name='foobar')))
+                         str(TinyContent.objects.get(name='foobar')))
 
     def test_non_existent(self):
         self.assertEqual("",
