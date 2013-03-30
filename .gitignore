@@ -5,3 +5,5 @@ dist/
 *.egg/
 pep8.txt
 coverage.xml
+.tox/
+build/
