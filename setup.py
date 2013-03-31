@@ -20,6 +20,12 @@ setup(
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
         'License :: OSI Approved :: BSD License',
+        "Environment :: Web Environment",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3",
     ],
     tests_require=(
         'django-setuptest==0.1.2',
