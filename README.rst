@@ -31,8 +31,9 @@ be found, either nothing is rendered (if using
 ``tinycontent_simple``), or the text between ``tinycontent`` and
 ``endtinycontent`` is rendered (if using the more complex variant).
 
-django-tinycontent supports Django 1.4 and Django 1.5. I've only
-tested it on Python 2.7, patches to fix any issues you find with
-Python 3 compatibility would be very welcome.
+django-tinycontent supports Django 1.4 and Django 1.5. Python 2.6
+works with both versions of Django, and Python 3.3 is supported for
+Django 1.5 Note that using `python setup.py test` only works for
+Python 2.x, since django-setuptest does not yet support Python 3.
 
 .. _django-boxes: https://github.com/eldarion/django-boxes
