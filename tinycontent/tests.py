@@ -144,14 +144,14 @@ class TinyContentTestCase(unittest.TestCase):
 
     def test_wrong_number_of_arguments(self):
         t = ("{% tinycontent %}{% endtinycontent %}")
-        self.assertRaises(TemplateSyntaxError, lambda : render_template(t))
+        self.assertRaises(TemplateSyntaxError, lambda: render_template(t))
 
     def test_bad_arguments(self):
         t = ("{% tinycontent 'foo %}{% endtinycontent %}")
         self.assertRaises(TemplateSyntaxError, lambda: render_template(t))
 
         t = ('{% tinycontent "foo %}{% endtinycontent %}')
-        self.assertRaises(TemplateSyntaxError, lambda : render_template(t))
+        self.assertRaises(TemplateSyntaxError, lambda: render_template(t))
 
     def test_with_user(self):
         user, is_new_user = User.objects.get_or_create(username='dom')
