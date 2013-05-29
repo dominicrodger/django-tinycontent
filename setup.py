@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        "Django>=1.4.3",
+        "Django>=1.4.5",
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -28,7 +28,7 @@ setup(
         "Programming Language :: Python :: 3.3",
     ],
     tests_require=(
-        'django-setuptest==0.1.2',
+        'django-setuptest==0.1.3',
     ),
     test_suite='setuptest.setuptest.SetupTestSuite',
 )
