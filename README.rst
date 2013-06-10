@@ -31,6 +31,10 @@ be found, either nothing is rendered (if using
 ``tinycontent_simple``), or the text between ``tinycontent`` and
 ``endtinycontent`` is rendered (if using the more complex variant).
 
+To apply custom filters to your content, set ``TINYCONTENT_FILTER`` to
+a dotted path to a callable that takes the raw content and returns the
+transformed content.
+
 django-tinycontent supports Django 1.4 and Django 1.5. Python 2.6
 works with both versions of Django, and Python 3.3 is supported for
 Django 1.5.

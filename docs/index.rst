@@ -49,4 +49,16 @@ invalid, any use of tinycontent tags will raise
 ``ImproperlyConfigured``. If this setting is not provided, the content
 will be returned exactly as stored.
 
+For example, if your project has a file called ``utils.py``, you might
+have a function in it called ``tinycontent_transform`` that would look
+something like this::
+
+    def tinycontent_transform(content):
+        return do_something_to(content)
+
+To get the tinycontent templates to use that function, in your
+``settings.py`` file, you'd write something like::
+
+    TINYCONTENT_FILTER = 'myproj.utils.tinycontent_transform'
+
 .. _django-boxes: https://github.com/eldarion/django-boxes
