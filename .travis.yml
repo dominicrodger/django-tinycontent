@@ -8,5 +8,5 @@ env:
   - TOX_ENV=py26-1.4.X
 install:
   - pip install tox
-before_script:
+script:
   - tox -e $TOX_ENV
