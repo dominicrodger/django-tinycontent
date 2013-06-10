@@ -33,7 +33,6 @@ be found, either nothing is rendered (if using
 
 django-tinycontent supports Django 1.4 and Django 1.5. Python 2.6
 works with both versions of Django, and Python 3.3 is supported for
-Django 1.5. Note that using `python setup.py test` only works for
-Python 2.x, since django-setuptest does not yet support Python 3.
+Django 1.5.
 
 .. _django-boxes: https://github.com/eldarion/django-boxes
