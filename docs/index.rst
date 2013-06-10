@@ -1,5 +1,5 @@
 Welcome to django-tinycontent's documentation!
-==============================================
+**********************************************
 
 .. toctree::
    :maxdepth: 2
@@ -36,5 +36,17 @@ interface. If a block with the name given in the template tag cannot
 be found, either nothing is rendered (if using
 ``tinycontent_simple``), or the text between ``tinycontent`` and
 ``endtinycontent`` is rendered (if using the more complex variant).
+
+Available Settings
+==================
+
+``TINYCONTENT_FILTER``
+----------------------
+
+Set this to a dotted path to a function to call to filter the content
+(for example, to convert Markdown to HTML). If the given path is
+invalid, any use of tinycontent tags will raise
+``ImproperlyConfigured``. If this setting is not provided, the content
+will be returned exactly as stored.
 
 .. _django-boxes: https://github.com/eldarion/django-boxes

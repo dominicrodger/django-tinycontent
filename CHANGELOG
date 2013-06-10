@@ -1,0 +1,5 @@
+0.1.8
+
+Added support for TINYCONTENT_FILTER, which is a filter function
+applied to content stored with django-tinycontent before display
+(e.g. transform Markdown to HTML).

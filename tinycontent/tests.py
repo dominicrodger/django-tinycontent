@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.context_processors import PermWrapper
+from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.template import Context, Template
 from django.template.base import TemplateSyntaxError
+from django.test import TestCase
+from django.test.utils import override_settings
+
 from tinycontent.models import TinyContent
-import unittest
 
 
 def render_template(input):
@@ -25,7 +28,7 @@ def render_for_test_user(t):
     return render_template_with_context(t, ctx)
 
 
-class TinyContentTestCase(unittest.TestCase):
+class TinyContentTestCase(TestCase):
     def setUp(self):
         TinyContent.objects.get_or_create(name='foobar',
                                           content='This is a test.')
@@ -216,3 +219,36 @@ class TinyContentTestCase(unittest.TestCase):
                          render_template("{% tinycontent 'html' %}"
                                          "Not found."
                                          "{% endtinycontent %}"))
+
+    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    def test_with_custom_filter_simple(self):
+        self.assertEqual("THIS IS A TEST.",
+                         render_template("{% tinycontent_simple 'foobar' %}"))
+
+    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    def test_with_custom_filter_complex(self):
+        self.assertEqual("THIS IS A TEST.",
+                         render_template("{% tinycontent 'foobar' %}"
+                                         "Not found."
+                                         "{% endtinycontent %}"))
+
+    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    def test_with_custom_filter_simple_with_html(self):
+        self.assertEqual("<STRONG>&AMP;</STRONG>",
+                         render_template("{% tinycontent_simple 'html' %}"))
+
+    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    def test_with_custom_filter_complex_with_html(self):
+        self.assertEqual("<STRONG>&AMP;</STRONG>",
+                         render_template("{% tinycontent 'html' %}"
+                                         "Not found."
+                                         "{% endtinycontent %}"))
+
+    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.ohnothisisfake')
+    def test_with_bad_custom_filter(self):
+        with self.assertRaises(ImproperlyConfigured):
+            render_template("{% tinycontent_simple 'foobar' %}")
+
+
+def toupper(content):
+    return content.upper()
