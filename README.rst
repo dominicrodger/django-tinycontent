@@ -39,4 +39,14 @@ django-tinycontent supports Django 1.4 and Django 1.5. Python 2.6
 works with both versions of Django, and Python 3.3 is supported for
 Django 1.5.
 
+Changelog
+---------
+
+v0.1.8
+
+* Added the ``TINYCONTENT_FILTER`` setting for controlling the way
+  content is output.
+* Improved testing with Travis (we now test all supported Python
+  versions and Django versions).
+
 .. _django-boxes: https://github.com/eldarion/django-boxes
