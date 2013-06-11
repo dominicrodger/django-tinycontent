@@ -43,6 +43,8 @@ Available Settings
 ``TINYCONTENT_FILTER``
 ----------------------
 
+.. versionadded:: 0.1.8
+
 Set this to a dotted path to a function to call to filter the content
 (for example, to convert Markdown to HTML). If the given path is
 invalid, any use of tinycontent tags will raise
