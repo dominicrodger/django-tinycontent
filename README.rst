@@ -35,9 +35,9 @@ To apply custom filters to your content, set ``TINYCONTENT_FILTER`` to
 a dotted path to a callable that takes the raw content and returns the
 transformed content.
 
-django-tinycontent supports Django 1.4 and Django 1.5. Python 2.6
-works with both versions of Django, and Python 3.3 is supported for
-Django 1.5.
+django-tinycontent supports all versions of Django from 1.4 to
+1.7. Python 2.6 works with both versions of Django, and Python 3.3 is
+supported for versions of Django from 1.5.
 
 Changelog
 ---------
