@@ -2,7 +2,7 @@
 django_tinycontent.egg-info/
 docs/_build/
 dist/
-*.egg/
+*.egg
 .eggs/
 pep8.txt
 coverage.xml
