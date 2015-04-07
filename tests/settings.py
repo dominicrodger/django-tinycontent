@@ -11,4 +11,5 @@ INSTALLED_APPS = (
     'tinycontent',
 )
 
-ROOT_URLCONF = 'test_urls'
+ROOT_URLCONF = 'tests.urls'
+SECRET_KEY = 'thisbagismadefromrecycledmaterial'

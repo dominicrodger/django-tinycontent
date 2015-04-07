@@ -1,3 +1,9 @@
+import os
+import sys
+
+# Needed for the custom filter tests
+sys.path.append(os.path.dirname(__file__))
+
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth.context_processors import PermWrapper
 from django.core.exceptions import ImproperlyConfigured
@@ -220,31 +226,31 @@ class TinyContentTestCase(TestCase):
                                          "Not found."
                                          "{% endtinycontent %}"))
 
-    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
     def test_with_custom_filter_simple(self):
         self.assertEqual("THIS IS A TEST.",
                          render_template("{% tinycontent_simple 'foobar' %}"))
 
-    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
     def test_with_custom_filter_complex(self):
         self.assertEqual("THIS IS A TEST.",
                          render_template("{% tinycontent 'foobar' %}"
                                          "Not found."
                                          "{% endtinycontent %}"))
 
-    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
     def test_with_custom_filter_simple_with_html(self):
         self.assertEqual("<STRONG>&AMP;</STRONG>",
                          render_template("{% tinycontent_simple 'html' %}"))
 
-    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.toupper')
+    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
     def test_with_custom_filter_complex_with_html(self):
         self.assertEqual("<STRONG>&AMP;</STRONG>",
                          render_template("{% tinycontent 'html' %}"
                                          "Not found."
                                          "{% endtinycontent %}"))
 
-    @override_settings(TINYCONTENT_FILTER='tinycontent.tests.ohnothisisfake')
+    @override_settings(TINYCONTENT_FILTER='test_tinycontent.ohnothisisfake')
     def test_with_bad_custom_filter(self):
         with self.assertRaises(ImproperlyConfigured):
             render_template("{% tinycontent_simple 'foobar' %}")
