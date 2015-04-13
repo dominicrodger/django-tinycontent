@@ -17,8 +17,8 @@ clean:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
-	rm pep8.txt
-	rm coverage.xml
+	rm -f pep8.txt
+	rm -f coverage.xml
 	rm -rf __pycache__
 
 lint:
