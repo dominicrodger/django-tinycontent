@@ -30,6 +30,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "Django>=1.4",
+        "django-autoslug",
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

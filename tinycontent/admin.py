@@ -1,5 +1,5 @@
 from django.contrib import admin
-from tinycontent.models import TinyContent
+from tinycontent.models import TinyContent, TinyContentFileUpload
 
 
 class TinyContentAdmin(admin.ModelAdmin):
@@ -7,3 +7,10 @@ class TinyContentAdmin(admin.ModelAdmin):
     search_fields = ('name', 'content', )
 
 admin.site.register(TinyContent, TinyContentAdmin)
+
+
+class TinyContentFileUploadAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    search_fields = ('name', )
+
+admin.site.register(TinyContentFileUpload, TinyContentFileUploadAdmin)
