@@ -1,4 +1,5 @@
 import os
+import pytest
 import sys
 
 # Needed for the custom filter tests
@@ -10,8 +11,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
 from django.template import Context, Template
 from django.template.base import TemplateSyntaxError
-from django.test import TestCase
-from django.test.utils import override_settings
 
 from tinycontent.models import TinyContent
 
@@ -34,226 +33,273 @@ def render_for_test_user(t):
     return render_template_with_context(t, ctx)
 
 
-class TinyContentTestCase(TestCase):
-    def setUp(self):
-        TinyContent.objects.get_or_create(name='foobar',
-                                          content='This is a test.')
-        TinyContent.objects.get_or_create(name='html',
-                                          content='<strong>&amp;</strong>')
+@pytest.mark.django_db
+def test_str(simple_content):
+    assert "foobar" == str(TinyContent.objects.get(name='foobar'))
 
-    def test_str(self):
-        self.assertEqual("foobar",
-                         str(TinyContent.objects.get(name='foobar')))
 
-    def test_non_existent(self):
-        self.assertEqual("",
-                         render_template("{% tinycontent_simple 'foo' %}"))
+@pytest.mark.django_db
+def test_non_existent(simple_content):
+    assert "" == render_template("{% tinycontent_simple 'foo' %}")
 
-    def test_simple_existent(self):
-        self.assertEqual("This is a test.",
-                         render_template("{% tinycontent_simple 'foobar' %}"))
 
-    def test_alternate_text_if_not_found(self):
-        t = ("{% tinycontent 'neverexists' %}"
-             "I could not find it."
-             "{% endtinycontent %}")
+@pytest.mark.django_db
+def test_simple_existent(simple_content):
+    assert "This is a test." == render_template(
+        "{% tinycontent_simple 'foobar' %}"
+    )
 
-        self.assertEqual("I could not find it.",
-                         render_template(t))
 
-    def test_alternate_text_if_found(self):
-        t = ("{% tinycontent 'foobar' %}"
-             "I could not find it."
-             "{% endtinycontent %}")
+@pytest.mark.django_db
+def test_alternate_text_if_not_found(simple_content):
+    t = ("{% tinycontent 'neverexists' %}"
+         "I could not find it."
+         "{% endtinycontent %}")
 
-        self.assertEqual("This is a test.",
-                         render_template(t))
+    assert "I could not find it." == render_template(t)
 
-    def test_alternate_text_if_found_double_quotes(self):
-        t = ('{% tinycontent "foobar" %}'
-             'I could not find it.'
-             '{% endtinycontent %}')
 
-        self.assertEqual("This is a test.",
-                         render_template(t))
+@pytest.mark.django_db
+def test_alternate_text_if_found(simple_content):
+    t = ("{% tinycontent 'foobar' %}"
+         "I could not find it."
+         "{% endtinycontent %}")
 
-    def test_alternate_text_if_not_found_with_embedded_tags(self):
-        t = ("{% tinycontent 'neverexists' %}"
-             "I could not find {{ meaning }}."
-             "{% endtinycontent %}")
+    assert "This is a test." == render_template(t)
 
-        ctx = {'meaning': 42}
 
-        self.assertEqual("I could not find 42.",
-                         render_template_with_context(t, ctx))
+@pytest.mark.django_db
+def test_alternate_text_if_found_double_quotes(simple_content):
+    t = ('{% tinycontent "foobar" %}'
+         'I could not find it.'
+         '{% endtinycontent %}')
 
-    def test_allows_context_variables_as_content_names_from_simple(self):
-        t = ("{% tinycontent_simple content_name %}")
+    assert "This is a test." == render_template(t)
 
-        ctx = {'content_name': 'foobar'}
 
-        self.assertEqual("This is a test.",
-                         render_template_with_context(t, ctx))
+@pytest.mark.django_db
+def test_alternate_text_if_not_found_with_embedded_tags(simple_content):
+    t = ("{% tinycontent 'neverexists' %}"
+         "I could not find {{ meaning }}."
+         "{% endtinycontent %}")
 
-    def test_allows_context_variables_as_content_names_from_complex(self):
-        t = ("{% tinycontent content_name %}"
-             "Text if empty."
-             "{% endtinycontent %}")
+    ctx = {'meaning': 42}
 
-        ctx = {'content_name': 'foobar'}
+    assert "I could not find 42." == render_template_with_context(
+        t, ctx
+    )
 
-        self.assertEqual("This is a test.",
-                         render_template_with_context(t, ctx))
 
-    def test_allows_with_tag_as_content_names_from_simple(self):
-        t = ("{% with content_name='foobar' %}"
-             "{% tinycontent_simple content_name %}"
-             "{% endwith %}")
+@pytest.mark.django_db
+def test_allows_context_variables_as_content_names_from_simple(simple_content):
+    t = ("{% tinycontent_simple content_name %}")
 
-        self.assertEqual("This is a test.",
-                         render_template(t))
+    ctx = {'content_name': 'foobar'}
 
-    def test_allows_with_tag_as_content_names_from_complex(self):
-        t = ("{% with content_name='foobar' %}"
-             "{% tinycontent content_name %}"
-             "Text if empty."
-             "{% endtinycontent %}"
-             "{% endwith %}")
+    assert "This is a test." == render_template_with_context(t, ctx)
 
-        self.assertEqual("This is a test.",
-                         render_template(t))
 
-    def test_allows_unprovided_ctx_variables_as_content_name_complex(self):
-        t = ("{% tinycontent content_name %}"
-             "Text if empty."
-             "{% endtinycontent %}")
+@pytest.mark.django_db
+def test_allows_context_variables_as_content_names_from_complex(
+        simple_content
+):
+    t = ("{% tinycontent content_name %}"
+         "Text if empty."
+         "{% endtinycontent %}")
 
-        self.assertEqual("Text if empty.",
-                         render_template(t))
+    ctx = {'content_name': 'foobar'}
 
-    def test_allows_unprovided_ctx_variables_as_content_name_simple(self):
-        t = ("{% tinycontent_simple content_name %}")
+    assert "This is a test." == render_template_with_context(t, ctx)
 
-        self.assertEqual("",
-                         render_template(t))
 
-    def test_ctx_variables_with_name_of_content_complex(self):
-        t = ("{% tinycontent foobar %}"
-             "Text if empty."
-             "{% endtinycontent %}")
+@pytest.mark.django_db
+def test_allows_with_tag_as_content_names_from_simple(simple_content):
+    t = ("{% with content_name='foobar' %}"
+         "{% tinycontent_simple content_name %}"
+         "{% endwith %}")
 
-        self.assertEqual("Text if empty.",
-                         render_template(t))
+    assert "This is a test." == render_template(t)
 
-    def test_ctx_variables_with_name_of_content_simple(self):
-        t = ("{% tinycontent_simple foobar %}")
 
-        self.assertEqual("",
-                         render_template(t))
+@pytest.mark.django_db
+def test_allows_with_tag_as_content_names_from_complex(simple_content):
+    t = ("{% with content_name='foobar' %}"
+         "{% tinycontent content_name %}"
+         "Text if empty."
+         "{% endtinycontent %}"
+         "{% endwith %}")
 
-    def test_wrong_number_of_arguments(self):
-        t = ("{% tinycontent %}{% endtinycontent %}")
-        self.assertRaises(TemplateSyntaxError, lambda: render_template(t))
+    assert "This is a test." == render_template(t)
 
-    def test_bad_arguments(self):
-        t = ("{% tinycontent 'foo %}{% endtinycontent %}")
-        self.assertRaises(TemplateSyntaxError, lambda: render_template(t))
 
-        t = ('{% tinycontent "foo %}{% endtinycontent %}')
-        self.assertRaises(TemplateSyntaxError, lambda: render_template(t))
+@pytest.mark.django_db
+def test_allows_unprovided_ctx_variables_as_content_name_complex(
+        simple_content
+):
+    t = ("{% tinycontent content_name %}"
+         "Text if empty."
+         "{% endtinycontent %}")
 
-    def test_with_user(self):
-        user, is_new_user = User.objects.get_or_create(username='dom')
+    assert "Text if empty." == render_template(t)
 
-        t = ("{% tinycontent 'foobar' %}"
-             "Text if empty."
-             "{% endtinycontent %}")
 
-        self.assertEqual("This is a test.",
-                         render_for_test_user(t))
+@pytest.mark.django_db
+def test_allows_unprovided_ctx_variables_as_content_name_simple(
+        simple_content
+):
+    t = ("{% tinycontent_simple content_name %}")
 
-        perm = Permission.objects.get(codename='change_tinycontent')
-        user.user_permissions.add(perm)
-        user.save()
+    assert "" == render_template(t)
 
-        root_edit_url = reverse('admin:tinycontent_tinycontent_change',
-                                args=[1, ])
 
-        rendered = render_for_test_user(t)
-        self.assertTrue(root_edit_url in rendered)
-        self.assertTrue('Edit' in rendered)
-        self.assertTrue("This is a test." in rendered)
+@pytest.mark.django_db
+def test_ctx_variables_with_name_of_content_complex(simple_content):
+    t = ("{% tinycontent foobar %}"
+         "Text if empty."
+         "{% endtinycontent %}")
 
-        t = "{% tinycontent_simple 'foobar' %}"
-        rendered = render_for_test_user(t)
-        self.assertTrue(root_edit_url in rendered)
-        self.assertTrue('Edit' in rendered)
-        self.assertTrue("This is a test." in rendered)
+    assert "Text if empty." == render_template(t)
 
-    def test_with_user_for_nonexistent_tag(self):
-        user, is_new_user = User.objects.get_or_create(username='dom')
 
-        t = ("{% tinycontent 'notthere' %}"
-             "Text if empty."
-             "{% endtinycontent %}")
+@pytest.mark.django_db
+def test_ctx_variables_with_name_of_content_simple(simple_content):
+    t = ("{% tinycontent_simple foobar %}")
 
-        self.assertEqual("Text if empty.",
-                         render_for_test_user(t))
+    assert "" == render_template(t)
 
-        perm = Permission.objects.get(codename='add_tinycontent')
-        user.user_permissions.add(perm)
-        user.save()
 
-        root_add_url = reverse('admin:tinycontent_tinycontent_add')
+@pytest.mark.django_db
+def test_wrong_number_of_arguments(simple_content):
+    t = ("{% tinycontent %}{% endtinycontent %}")
 
-        rendered = render_for_test_user(t)
-        self.assertTrue('%s?name=notthere' % root_add_url in rendered)
-        self.assertTrue('Add' in rendered)
-        self.assertTrue("Text if empty." in rendered)
+    with pytest.raises(TemplateSyntaxError):
+        render_template(t)
 
-        t = "{% tinycontent_simple 'notthere' %}"
-        rendered = render_for_test_user(t)
-        self.assertTrue('%s?name=notthere' % root_add_url in rendered)
-        self.assertTrue('Add' in rendered)
 
-    def test_with_html_simple(self):
-        self.assertEqual("<strong>&amp;</strong>",
-                         render_template("{% tinycontent_simple 'html' %}"))
+@pytest.mark.django_db
+def test_bad_arguments(simple_content):
+    t = ("{% tinycontent 'foo %}{% endtinycontent %}")
+    with pytest.raises(TemplateSyntaxError):
+        render_template(t)
 
-    def test_with_html_complex(self):
-        self.assertEqual("<strong>&amp;</strong>",
-                         render_template("{% tinycontent 'html' %}"
-                                         "Not found."
-                                         "{% endtinycontent %}"))
+    t = ('{% tinycontent "foo %}{% endtinycontent %}')
+    with pytest.raises(TemplateSyntaxError):
+        render_template(t)
 
-    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
-    def test_with_custom_filter_simple(self):
-        self.assertEqual("THIS IS A TEST.",
-                         render_template("{% tinycontent_simple 'foobar' %}"))
 
-    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
-    def test_with_custom_filter_complex(self):
-        self.assertEqual("THIS IS A TEST.",
-                         render_template("{% tinycontent 'foobar' %}"
-                                         "Not found."
-                                         "{% endtinycontent %}"))
+@pytest.mark.django_db
+def test_with_user(simple_content):
+    user, is_new_user = User.objects.get_or_create(username='dom')
 
-    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
-    def test_with_custom_filter_simple_with_html(self):
-        self.assertEqual("<STRONG>&AMP;</STRONG>",
-                         render_template("{% tinycontent_simple 'html' %}"))
+    t = ("{% tinycontent 'foobar' %}"
+         "Text if empty."
+         "{% endtinycontent %}")
 
-    @override_settings(TINYCONTENT_FILTER='test_tinycontent.toupper')
-    def test_with_custom_filter_complex_with_html(self):
-        self.assertEqual("<STRONG>&AMP;</STRONG>",
-                         render_template("{% tinycontent 'html' %}"
-                                         "Not found."
-                                         "{% endtinycontent %}"))
+    assert "This is a test." == render_for_test_user(t)
 
-    @override_settings(TINYCONTENT_FILTER='test_tinycontent.ohnothisisfake')
-    def test_with_bad_custom_filter(self):
-        with self.assertRaises(ImproperlyConfigured):
-            render_template("{% tinycontent_simple 'foobar' %}")
+    perm = Permission.objects.get(codename='change_tinycontent')
+    user.user_permissions.add(perm)
+    user.save()
+
+    root_edit_url = reverse('admin:tinycontent_tinycontent_change',
+                            args=[1, ])
+
+    rendered = render_for_test_user(t)
+    assert root_edit_url in rendered
+    assert 'Edit' in rendered
+    assert "This is a test." in rendered
+
+    t = "{% tinycontent_simple 'foobar' %}"
+    rendered = render_for_test_user(t)
+    assert root_edit_url in rendered
+    assert 'Edit' in rendered
+    assert "This is a test." in rendered
+
+
+@pytest.mark.django_db
+def test_with_user_for_nonexistent_tag(simple_content):
+    user, is_new_user = User.objects.get_or_create(username='dom')
+
+    t = ("{% tinycontent 'notthere' %}"
+         "Text if empty."
+         "{% endtinycontent %}")
+
+    assert "Text if empty." == render_for_test_user(t)
+
+    perm = Permission.objects.get(codename='add_tinycontent')
+    user.user_permissions.add(perm)
+    user.save()
+
+    root_add_url = reverse('admin:tinycontent_tinycontent_add')
+
+    rendered = render_for_test_user(t)
+    assert '%s?name=notthere' % root_add_url in rendered
+    assert 'Add' in rendered
+    assert "Text if empty." in rendered
+
+    t = "{% tinycontent_simple 'notthere' %}"
+    rendered = render_for_test_user(t)
+    assert '%s?name=notthere' % root_add_url in rendered
+    assert 'Add' in rendered
+
+
+@pytest.mark.django_db
+def test_with_html_simple(html_content):
+    assert "<strong>&amp;</strong>" == render_template(
+        "{% tinycontent_simple 'html' %}"
+    )
+
+
+@pytest.mark.django_db
+def test_with_html_complex(html_content):
+    assert "<strong>&amp;</strong>" == render_template(
+        "{% tinycontent 'html' %}"
+        "Not found."
+        "{% endtinycontent %}"
+    )
+
+
+@pytest.mark.django_db
+def test_with_custom_filter_simple(simple_content, settings):
+    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    assert "THIS IS A TEST." == render_template(
+        "{% tinycontent_simple 'foobar' %}"
+    )
+
+
+@pytest.mark.django_db
+def test_with_custom_filter_complex(simple_content, settings):
+    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    assert "THIS IS A TEST." == render_template(
+        "{% tinycontent 'foobar' %}"
+        "Not found."
+        "{% endtinycontent %}"
+    )
+
+
+@pytest.mark.django_db
+def test_with_custom_filter_simple_with_html(html_content, settings):
+    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    assert "<STRONG>&AMP;</STRONG>" == render_template(
+        "{% tinycontent_simple 'html' %}"
+    )
+
+
+@pytest.mark.django_db
+def test_with_custom_filter_complex_with_html(html_content, settings):
+    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    assert "<STRONG>&AMP;</STRONG>" == render_template(
+        "{% tinycontent 'html' %}"
+        "Not found."
+        "{% endtinycontent %}"
+    )
+
+
+@pytest.mark.django_db
+def test_with_bad_custom_filter(simple_content, settings):
+    settings.TINYCONTENT_FILTER = 'test_tinycontent.ohnothisisfake'
+    with pytest.raises(ImproperlyConfigured):
+        render_template("{% tinycontent_simple 'foobar' %}")
 
 
 def toupper(content):
