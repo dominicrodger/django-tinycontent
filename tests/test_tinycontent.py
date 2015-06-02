@@ -5,30 +5,16 @@ import sys
 # Needed for the custom filter tests
 sys.path.append(os.path.dirname(__file__))
 
-from django.contrib.auth.context_processors import PermWrapper
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
-from django.template import Context, Template
 from django.template.base import TemplateSyntaxError
 
 from tinycontent.models import TinyContent
-
-
-def render_template(input):
-    t = Template("{% load tinycontent_tags %}" + input)
-    c = Context()
-    return t.render(c).strip()
-
-
-def render_template_with_context(input, context):
-    t = Template("{% load tinycontent_tags %}" + input)
-    c = Context(context)
-    return t.render(c).strip()
-
-
-def render_for_test_user(t, user):
-    ctx = {'user': user, 'perms': PermWrapper(user), }
-    return render_template_with_context(t, ctx)
+from .utils import (
+    render_template,
+    render_template_with_context,
+    render_for_test_user
+)
 
 
 @pytest.mark.django_db
@@ -247,7 +233,7 @@ def test_with_html_complex(html_content):
 
 @pytest.mark.django_db
 def test_with_custom_filter_simple(simple_content, settings):
-    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    settings.TINYCONTENT_FILTER = 'utils.toupper'
     assert "THIS IS A TEST." == render_template(
         "{% tinycontent_simple 'foobar' %}"
     )
@@ -255,7 +241,7 @@ def test_with_custom_filter_simple(simple_content, settings):
 
 @pytest.mark.django_db
 def test_with_custom_filter_complex(simple_content, settings):
-    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    settings.TINYCONTENT_FILTER = 'utils.toupper'
     assert "THIS IS A TEST." == render_template(
         "{% tinycontent 'foobar' %}"
         "Not found."
@@ -265,7 +251,7 @@ def test_with_custom_filter_complex(simple_content, settings):
 
 @pytest.mark.django_db
 def test_with_custom_filter_simple_with_html(html_content, settings):
-    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    settings.TINYCONTENT_FILTER = 'utils.toupper'
     assert "<STRONG>&AMP;</STRONG>" == render_template(
         "{% tinycontent_simple 'html' %}"
     )
@@ -273,7 +259,7 @@ def test_with_custom_filter_simple_with_html(html_content, settings):
 
 @pytest.mark.django_db
 def test_with_custom_filter_complex_with_html(html_content, settings):
-    settings.TINYCONTENT_FILTER = 'test_tinycontent.toupper'
+    settings.TINYCONTENT_FILTER = 'utils.toupper'
     assert "<STRONG>&AMP;</STRONG>" == render_template(
         "{% tinycontent 'html' %}"
         "Not found."
@@ -283,10 +269,6 @@ def test_with_custom_filter_complex_with_html(html_content, settings):
 
 @pytest.mark.django_db
 def test_with_bad_custom_filter(simple_content, settings):
-    settings.TINYCONTENT_FILTER = 'test_tinycontent.ohnothisisfake'
+    settings.TINYCONTENT_FILTER = 'utils.ohnothisisfake'
     with pytest.raises(ImproperlyConfigured):
         render_template("{% tinycontent_simple 'foobar' %}")
-
-
-def toupper(content):
-    return content.upper()
