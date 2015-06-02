@@ -44,7 +44,7 @@ setup(
         "Programming Language :: Python :: 3.3",
     ],
     tests_require=(
-        "pytest==2.6.4",
+        "pytest==2.7.0",
         "pytest-cov==1.7.0",
         "pytest-django==2.8.0",
     ),
