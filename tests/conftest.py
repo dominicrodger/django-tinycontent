@@ -56,7 +56,7 @@ def file_upload():
     upload, _ = TinyContentFileUpload.objects.get_or_create(
         name='Foobar',
         file=SimpleUploadedFile(
-            'test_file.txt', b'Hello, world!'
+            'simple_file.txt', b'Hello, world!'
         )
     )
 
