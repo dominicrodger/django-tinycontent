@@ -1,19 +1,11 @@
-import os
 import pytest
-import sys
 
-# Needed for the custom filter tests
-sys.path.append(os.path.dirname(__file__))
-
-from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
 from django.template.base import TemplateSyntaxError
 
 from tinycontent.models import TinyContent
 from .utils import (
     render_template,
-    render_template_with_context,
-    render_for_test_user
+    render_template_with_context
 )
 
 
@@ -172,50 +164,6 @@ def test_bad_arguments(simple_content):
 
 
 @pytest.mark.django_db
-def test_with_user(simple_content, user, user_noauth):
-    t = ("{% tinycontent 'foobar' %}"
-         "Text if empty."
-         "{% endtinycontent %}")
-
-    assert "This is a test." == render_for_test_user(t, user_noauth)
-
-    root_edit_url = reverse('admin:tinycontent_tinycontent_change',
-                            args=[simple_content.pk, ])
-
-    rendered = render_for_test_user(t, user)
-    assert root_edit_url in rendered
-    assert 'Edit' in rendered
-    assert "This is a test." in rendered
-
-    t = "{% tinycontent_simple 'foobar' %}"
-    rendered = render_for_test_user(t, user)
-    assert root_edit_url in rendered
-    assert 'Edit' in rendered
-    assert "This is a test." in rendered
-
-
-@pytest.mark.django_db
-def test_with_user_for_nonexistent_tag(simple_content, user, user_noauth):
-    t = ("{% tinycontent 'notthere' %}"
-         "Text if empty."
-         "{% endtinycontent %}")
-
-    assert "Text if empty." == render_for_test_user(t, user_noauth)
-
-    root_add_url = reverse('admin:tinycontent_tinycontent_add')
-
-    rendered = render_for_test_user(t, user)
-    assert '%s?name=notthere' % root_add_url in rendered
-    assert 'Add' in rendered
-    assert "Text if empty." in rendered
-
-    t = "{% tinycontent_simple 'notthere' %}"
-    rendered = render_for_test_user(t, user)
-    assert '%s?name=notthere' % root_add_url in rendered
-    assert 'Add' in rendered
-
-
-@pytest.mark.django_db
 def test_with_html_simple(html_content):
     assert "<strong>&amp;</strong>" == render_template(
         "{% tinycontent_simple 'html' %}"
@@ -229,46 +177,3 @@ def test_with_html_complex(html_content):
         "Not found."
         "{% endtinycontent %}"
     )
-
-
-@pytest.mark.django_db
-def test_with_custom_filter_simple(simple_content, settings):
-    settings.TINYCONTENT_FILTER = 'utils.toupper'
-    assert "THIS IS A TEST." == render_template(
-        "{% tinycontent_simple 'foobar' %}"
-    )
-
-
-@pytest.mark.django_db
-def test_with_custom_filter_complex(simple_content, settings):
-    settings.TINYCONTENT_FILTER = 'utils.toupper'
-    assert "THIS IS A TEST." == render_template(
-        "{% tinycontent 'foobar' %}"
-        "Not found."
-        "{% endtinycontent %}"
-    )
-
-
-@pytest.mark.django_db
-def test_with_custom_filter_simple_with_html(html_content, settings):
-    settings.TINYCONTENT_FILTER = 'utils.toupper'
-    assert "<STRONG>&AMP;</STRONG>" == render_template(
-        "{% tinycontent_simple 'html' %}"
-    )
-
-
-@pytest.mark.django_db
-def test_with_custom_filter_complex_with_html(html_content, settings):
-    settings.TINYCONTENT_FILTER = 'utils.toupper'
-    assert "<STRONG>&AMP;</STRONG>" == render_template(
-        "{% tinycontent 'html' %}"
-        "Not found."
-        "{% endtinycontent %}"
-    )
-
-
-@pytest.mark.django_db
-def test_with_bad_custom_filter(simple_content, settings):
-    settings.TINYCONTENT_FILTER = 'utils.ohnothisisfake'
-    with pytest.raises(ImproperlyConfigured):
-        render_template("{% tinycontent_simple 'foobar' %}")
