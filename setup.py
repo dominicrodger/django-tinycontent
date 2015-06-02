@@ -44,8 +44,8 @@ setup(
         "Programming Language :: Python :: 3.3",
     ],
     tests_require=(
-        "pytest==2.7.0",
-        "pytest-cov==1.7.0",
+        "pytest==2.7.1",
+        "pytest-cov==1.8.1",
         "pytest-django==2.8.0",
     ),
     cmdclass = {'test': PyTest},
