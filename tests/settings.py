@@ -13,3 +13,5 @@ INSTALLED_APPS = (
 
 ROOT_URLCONF = 'tests.urls'
 SECRET_KEY = 'thisbagismadefromrecycledmaterial'
+
+MEDIA_ROOT = 'tests/testmedia'

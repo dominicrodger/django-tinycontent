@@ -10,3 +10,4 @@ coverage.xml
 build/
 .coverage
 test.db
+tests/testmedia/

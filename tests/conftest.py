@@ -3,8 +3,9 @@
 from __future__ import absolute_import
 
 import pytest
-from tinycontent.models import TinyContent
 from django.contrib.auth.models import User, Permission
+from django.core.files.uploadedfile import SimpleUploadedFile
+from tinycontent.models import TinyContent, TinyContentFileUpload
 
 
 @pytest.fixture()
@@ -48,3 +49,15 @@ def user_noauth():
     user, _ = User.objects.get_or_create(username='barry')
 
     return user
+
+
+@pytest.fixture()
+def file_upload():
+    upload, _ = TinyContentFileUpload.objects.get_or_create(
+        name='Foobar',
+        file=SimpleUploadedFile(
+            'test_file.txt', b'Hello, world!'
+        )
+    )
+
+    return upload
