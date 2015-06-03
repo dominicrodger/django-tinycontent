@@ -36,11 +36,17 @@ a dotted path to a callable that takes the raw content and returns the
 transformed content.
 
 django-tinycontent supports all versions of Django from 1.4 to
-1.7. Python 2.6 works with both versions of Django, and Python 3.3 is
-supported for versions of Django from 1.5.
+1.8. Python 3.3 or 3.4 are supported for versions of Django from 1.5.
 
 Changelog
 ---------
+
+v0.2.0
+
+* Dropped support for Python 2.6.
+* Added a markdown renderer - you can use this by setting
+  ``TINYCONTENT_FILTER`` to
+  ``'tinycontent.utils.renderers.markdown_renderer'``.
 
 v0.1.8
 
