@@ -1,7 +1,7 @@
 import pytest
 
 from tinycontent.models import TinyContent
-from .utils import render_template
+from ..utils import render_template
 
 
 TEST_FILTER = 'tinycontent.filters.md.markdown_filter'
