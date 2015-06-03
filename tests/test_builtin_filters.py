@@ -4,7 +4,7 @@ from tinycontent.models import TinyContent
 from .utils import render_template
 
 
-RENDERER = 'tinycontent.filters.md.markdown_renderer'
+RENDERER = 'tinycontent.filters.md.markdown_filter'
 
 
 @pytest.mark.django_db
