@@ -46,7 +46,7 @@ v0.2.0
 * Dropped support for Python 2.6.
 * Added a markdown renderer - you can use this by setting
   ``TINYCONTENT_FILTER`` to
-  ``'tinycontent.utils.renderers.markdown_renderer'``.
+  ``'tinycontent.renderers.md.markdown_renderer'``.
 
 v0.1.8
 
