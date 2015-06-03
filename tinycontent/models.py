@@ -1,7 +1,7 @@
 import autoslug
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from tinycontent.utils import import_from_setting
+from tinycontent.utils.importer import import_from_setting
 
 
 @python_2_unicode_compatible
