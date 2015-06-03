@@ -31,6 +31,7 @@ setup(
     install_requires=[
         "Django>=1.4",
         "django-autoslug",
+        "markdown",
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
