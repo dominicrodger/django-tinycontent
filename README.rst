@@ -44,9 +44,9 @@ Changelog
 v0.2.0
 
 * Dropped support for Python 2.6.
-* Added a markdown renderer - you can use this by setting
+* Added a built-in markdown filter - you can use it by setting
   ``TINYCONTENT_FILTER`` to
-  ``'tinycontent.renderers.md.markdown_renderer'``.
+  ``'tinycontent.filters.md.markdown_renderer'``.
 
 v0.1.8
 
