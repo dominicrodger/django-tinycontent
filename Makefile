@@ -1,7 +1,8 @@
-.PHONY: clean lint test testall coverage release sdist
+.PHONY: clean docs lint test testall coverage release sdist
 
 help:
 	@echo "clean - remove build and Python artifacts"
+	@echo "docs - build the documentation"
 	@echo "lint - run flake8"
 	@echo "test - run tests quickly with the default Python"
 	@echo "testall - run tests on every Python version with tox"
@@ -41,3 +42,6 @@ release: clean lint testall
 sdist: clean
 	python setup.py sdist
 	ls -l dist
+
+docs:
+	tox -e docs
