@@ -10,6 +10,8 @@ v0.2.0
   ``'tinycontent.filters.md.markdown_filter'``.
 * Added the ability to include links to files which you can upload
   via the admin.
+* Added support for setting ``TINYCONTENT_FILTER`` to a list of
+  dotted paths, to allow chaining filters.
 
 v0.1.8
 ------

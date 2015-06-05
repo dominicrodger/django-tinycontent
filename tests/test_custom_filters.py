@@ -51,3 +51,16 @@ def test_with_bad_custom_filter(simple_content, settings):
     settings.TINYCONTENT_FILTER = 'utils.ohnothisisfake'
     with pytest.raises(ImproperlyConfigured):
         render_template("{% tinycontent_simple 'foobar' %}")
+
+
+@pytest.mark.django_db
+def test_with_chained_custom_filters(simple_content, settings):
+    settings.TINYCONTENT_FILTER = [
+        'utils.toupper',
+        'utils.truncate_ten',
+        'utils.reverse',
+    ]
+
+    assert "A SI SIHT" == render_template(
+        "{% tinycontent_simple 'foobar' %}"
+    )

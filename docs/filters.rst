@@ -37,8 +37,26 @@ To get the tinycontent templates to use that function, in your
 
     TINYCONTENT_FILTER = 'myproj.utils.tinycontent_transform'
 
+Chaining Filters
+----------------
+
+You can optionally set ``TINYCONTENT_FILTER`` to a list of dotted
+paths - filters will be applied in the order in which you provide
+them.
+
+For example, to use :ref:`markdown-filter` with tinycontent's
+:ref:`built-in file support <file-filter>`, you could set
+``TINYCONTENT_FILTER`` like this::
+
+    TINYCONTENT_FILTER = [
+        'tinycontent.filters.md.markdown_filter',
+        'tinycontent.filters.builtin.uploaded_file_filter',
+    ]
+
 Built-in Filters
 ----------------
+
+.. _markdown-filter:
 
 Markdown
 ^^^^^^^^
@@ -48,12 +66,14 @@ this by setting ``TINYCONTENT_FILTER`` like this::
 
     TINYCONTENT_FILTER = 'tinycontent.filters.md.markdown_filter'
 
+.. _file-filter:
+
 File-upload Handler
 ^^^^^^^^^^^^^^^^^^^
 
-The file-upload filter is probably not useful, other than as an
-example - it replaces instances of ``@file:slug`` (where ``slug`` is
-the slug of a TinyContentFileUpload) with the URL to the file.
+The file-upload filter replaces instances of ``@file:slug`` (where
+``slug`` is the slug of a TinyContentFileUpload) with the URL to the
+file.
 
 You can enable this filter by setting ``TINYCONTENT_FILTER`` like
 this::

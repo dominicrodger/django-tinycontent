@@ -21,3 +21,11 @@ def render_for_test_user(t, user):
 
 def toupper(content):
     return content.upper()
+
+
+def truncate_ten(content):
+    return content[:10]
+
+
+def reverse(content):
+    return content[::-1]

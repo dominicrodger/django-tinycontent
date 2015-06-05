@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
@@ -20,9 +19,8 @@ def _imported_symbol(import_path):
     return getattr(module, symbol_name)
 
 
-def import_from_setting(setting_name):
-    """Return the resolution of an import path stored in a Django
-    setting. Raises an AttributeError if the setting does not exist.
+def import_from_dotted_path(path):
+    """Return the resolution of an import path in the given string.
 
     :arg setting_name: The name of the setting holding the import path
 
@@ -30,8 +28,6 @@ def import_from_setting(setting_name):
     resolved.
 
     """
-    path = getattr(settings, setting_name)
-
     try:
         return _imported_symbol(path)
     except (ImportError, AttributeError):
