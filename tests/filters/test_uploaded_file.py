@@ -20,10 +20,7 @@ def test_with_uploaded_file_filter(settings, file_upload):
         "{% tinycontent_simple 'fileref' %}"
     )
 
-    prefix = 'This is a <a href="'
-    assert result[:len(prefix)] == prefix
-    assert file_upload.file.url in result
-    assert file_upload.name in result
+    assert result == 'This is a %s' % file_upload.file.url
 
 
 @pytest.mark.django_db
@@ -52,11 +49,10 @@ def test_with_uploaded_file_multiple_files(settings):
     result = render_template(
         "{% tinycontent_simple 'multifileref' %}"
     )
-
-    assert 'Download File 1' in result
-    assert 'Download File 2' in result
-    assert file1.file.url in result
-    assert file2.file.url in result
+    lines = result.split('\n')
+    assert len(lines) == 2
+    assert lines[0] == "This is a %s" % file1.file.url
+    assert lines[1] == "So's this %s." % file2.file.url
 
 
 @pytest.mark.django_db
