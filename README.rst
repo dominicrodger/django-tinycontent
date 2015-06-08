@@ -44,6 +44,11 @@ Django. Python 3.3 or 3.4 are supported for versions of Django from
 Changelog
 =========
 
+v0.3.0
+------
+
+* Ensure the wheel we upload to PyPI is universal.
+
 v0.2.1
 ------
 

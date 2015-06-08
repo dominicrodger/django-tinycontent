@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v0.3.0
+------
+
+* Ensure the wheel we upload to PyPI is universal.
+
 v0.2.1
 ------
 
