@@ -33,10 +33,13 @@ be found, either nothing is rendered (if using
 
 To apply custom filters to your content, set ``TINYCONTENT_FILTER`` to
 a dotted path to a callable that takes the raw content and returns the
-transformed content.
+transformed content. You can also set ``TINYCONTENT_FILTER`` to be a
+list of dotted paths to callables, to chain filters together.
 
 django-tinycontent supports all versions of Django from 1.4 to
-1.8. Python 3.3 or 3.4 are supported for versions of Django from 1.5.
+1.8. Python 2.7 is supported for all supported versions of
+Django. Python 3.3 or 3.4 are supported for versions of Django from
+1.5.
 
 Changelog
 ---------
