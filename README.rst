@@ -42,7 +42,7 @@ Django. Python 3.3 or 3.4 are supported for versions of Django from
 1.5.
 
 Changelog
----------
+=========
 
 v0.2.0
 ------
