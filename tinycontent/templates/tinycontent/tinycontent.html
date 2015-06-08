@@ -1,6 +1,5 @@
 {{ obj.rendered_content|safe }}
 
 {% if perms.tinycontent.change_tinycontent %}
-{% load url from future %}
 (<a href="{% url 'admin:tinycontent_tinycontent_change' obj.id %}" title="Edit this content block">Edit</a>)
 {% endif %}

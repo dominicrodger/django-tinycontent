@@ -48,6 +48,8 @@ v0.3.0
 ------
 
 * Ensure the wheel we upload to PyPI is universal.
+* Forward compatibility for Django 1.9 - remove the ``{% load url
+  from future %}`` from tinycontent templates.
 
 v0.2.1
 ------
