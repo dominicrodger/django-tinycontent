@@ -36,10 +36,8 @@ a dotted path to a callable that takes the raw content and returns the
 transformed content. You can also set ``TINYCONTENT_FILTER`` to be a
 list of dotted paths to callables, to chain filters together.
 
-django-tinycontent supports all versions of Django from 1.4 to
-1.8. Python 2.7 is supported for all supported versions of
-Django. Python 3.3 or 3.4 are supported for versions of Django from
-1.5.
+django-tinycontent supports all versions of Django from 1.5 to
+1.8. Python 2.7, 3.3 and 3.4 are supported.
 
 Changelog
 =========
@@ -47,6 +45,9 @@ Changelog
 v0.3.0
 ------
 
+* Drop support for Django 1.4 (it's quite hard to support Django 1.4
+  and 1.9 in a single release - since Django 1.4 requires ``{% load
+  url from future %}``, and Django 1.9 doesn't support it).
 * Ensure the wheel we upload to PyPI is universal.
 * Forward compatibility for Django 1.9 - remove the ``{% load url
   from future %}`` from tinycontent templates.

@@ -4,6 +4,9 @@ Release Notes
 v0.3.0
 ------
 
+* Drop support for Django 1.4 (it's quite hard to support Django 1.4
+  and 1.9 in a single release - since Django 1.4 requires ``{% load
+  url from future %}``, and Django 1.9 doesn't support it).
 * Ensure the wheel we upload to PyPI is universal.
 * Forward compatibility for Django 1.9 - remove the ``{% load url
   from future %}`` from tinycontent templates.
