@@ -30,7 +30,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "Django>=1.4",
-        "django-autoslug",
+        "django-autoslug>=1.8.0",
         "markdown",
     ],
     classifiers=[

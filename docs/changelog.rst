@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+v0.4.0
+------
+
+* Require at least django-autoslug 1.8.0, to fix a warning about
+  unapplied migrations.
+
 v0.3.0
 ------
 
