@@ -1,9 +1,7 @@
 import autoslug
-from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils import six
-from tinycontent.utils.importer import import_from_dotted_path
+from tinycontent.conf import get_filter_list
 
 
 @python_2_unicode_compatible
@@ -15,19 +13,12 @@ class TinyContent(models.Model):
         return self.name
 
     def rendered_content(self):
-        try:
-            path_list = getattr(settings, 'TINYCONTENT_FILTER')
-        except AttributeError:
-            return self.content
-
-        if isinstance(path_list, six.string_types):
-            path_list = [path_list, ]
+        filters = get_filter_list()
 
         content = self.content
 
-        for path in path_list:
-            func = import_from_dotted_path(path)
-            content = func(content)
+        for filter in filters:
+            content = filter(content)
 
         return content
 
