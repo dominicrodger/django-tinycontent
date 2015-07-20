@@ -16,6 +16,7 @@ def simple_content():
     )
     return content
 
+
 @pytest.fixture()
 def split_content():
     content, _ = TinyContent.objects.get_or_create(

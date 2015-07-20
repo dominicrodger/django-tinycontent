@@ -1,5 +1,6 @@
 from django import template
 from django.template.loader import render_to_string
+from django.template.base import TemplateSyntaxError 
 from tinycontent.models import TinyContent
 
 register = template.Library()
@@ -30,7 +31,12 @@ class TinyContentNode(template.Node):
 
 @register.tag
 def tinycontent(parser, token):
-    args = [parser.compile_filter(x) for x in token.split_contents()[1:]]
+    parts = token.split_contents()[1:]
+
+    if not parts:
+        raise TemplateSyntaxError("'tinycontent' tag takes arguments.")
+
+    args = [parser.compile_filter(x) for x in parts]
     nodelist = parser.parse(('endtinycontent',))
     parser.delete_first_token()
     return TinyContentNode(args, nodelist)
@@ -38,6 +44,10 @@ def tinycontent(parser, token):
 
 @register.simple_tag(takes_context=True)
 def tinycontent_simple(context, *args):
+
+    if not args:
+        raise TemplateSyntaxError("'tinycontent' tag takes arguments.")
+
     content_name = ':'.join(map(unicode, args))
     try:
         obj = TinyContent.objects.get(name=content_name)
