@@ -18,6 +18,15 @@ def simple_content():
 
 
 @pytest.fixture()
+def split_content():
+    content, _ = TinyContent.objects.get_or_create(
+        name='foo:bar',
+        content='This is a second test.'
+    )
+    return content
+
+
+@pytest.fixture()
 def html_content():
     content, _ = TinyContent.objects.get_or_create(
         name='html',

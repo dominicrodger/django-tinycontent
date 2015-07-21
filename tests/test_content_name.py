@@ -29,6 +29,28 @@ def test_allows_context_variables_as_content_names_from_complex(
 
 
 @pytest.mark.django_db
+def test_allows_multiple_arguments_and_variables_from_simple(split_content):
+    t = ("{% tinycontent_simple 'foo' var %}")
+
+    ctx = {'var': 'bar'}
+
+    assert "This is a second test." == render_template_with_context(t, ctx)
+
+
+@pytest.mark.django_db
+def test_allows_multiple_arguments_and_variables_from_complex(
+        split_content
+):
+    t = ("{% tinycontent 'foo' key %}"
+         "Text if empty."
+         "{% endtinycontent %}")
+
+    ctx = {'key': 'bar'}
+
+    assert "This is a second test." == render_template_with_context(t, ctx)
+
+
+@pytest.mark.django_db
 def test_allows_with_tag_as_content_names_from_simple(simple_content):
     t = ("{% with content_name='foobar' %}"
          "{% tinycontent_simple content_name %}"
