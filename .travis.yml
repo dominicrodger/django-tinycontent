@@ -1,5 +1,10 @@
 language: python
 python: 2.7
+
+cache:
+  directories:
+    - $HOME/.pip-cache/
+
 env:
   - TOX_ENV=py27-1.8.X
   - TOX_ENV=py27-1.7.X
@@ -12,6 +17,6 @@ env:
   - TOX_ENV=docs
   - TOX_ENV=flake8
 install:
-  - pip install tox
+  - pip install tox --cache-dir $HOME/.pip-cache
 script:
   - tox -e $TOX_ENV
