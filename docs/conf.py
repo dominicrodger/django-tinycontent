@@ -12,6 +12,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+from datetime import date
 import sys, os
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -42,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'django-tinycontent'
-copyright = u'2013, Dominic Rodger'
+copyright = u'2013 - %d, Dominic Rodger' % date.today().year
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
