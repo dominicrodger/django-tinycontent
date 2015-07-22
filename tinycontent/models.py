@@ -22,6 +22,10 @@ class TinyContent(models.Model):
 
         return content
 
+    @staticmethod
+    def get_content_by_name(name):
+        return TinyContent.objects.get(name=name)
+
     class Meta:
         verbose_name = 'Content block'
 

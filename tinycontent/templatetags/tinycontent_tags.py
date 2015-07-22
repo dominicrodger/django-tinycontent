@@ -18,7 +18,7 @@ class TinyContentNode(template.Node):
     def render(self, context):
         try:
             name = self.get_name(context)
-            obj = TinyContent.objects.get(name=name)
+            obj = TinyContent.get_content_by_name(name)
             return render_to_string('tinycontent/tinycontent.html',
                                     {'obj': obj},
                                     context)
@@ -51,7 +51,7 @@ def tinycontent_simple(context, *args):
 
     content_name = u':'.join(map(force_text, args))
     try:
-        obj = TinyContent.objects.get(name=content_name)
+        obj = TinyContent.get_content_by_name(content_name)
         return render_to_string('tinycontent/tinycontent.html',
                                 {'obj': obj},
                                 context)
