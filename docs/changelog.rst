@@ -1,18 +1,22 @@
 Release Notes
 =============
 
-v0.4.0
+v0.5.0
 ------
 
 * Add support for multiple arguments to both the ``tinycontent`` and
   the ``tinycontent_simple`` template tags. See the documentation
   about :ref:`multiple-arguments`.
-* Require at least django-autoslug 1.8.0, to fix a warning about
-  unapplied migrations.
 * Start caching database queries - fetching a TinyContent block by
   name (as the template tags do), will only hit the database the
   first time that content block is loaded (unless the content block
   is changed).
+
+v0.4.0
+------
+
+* Require at least django-autoslug 1.8.0, to fix a warning about
+  unapplied migrations.
 
 v0.3.0
 ------

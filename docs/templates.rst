@@ -28,7 +28,7 @@ Optionally, you can post-process the output with :ref:`filters`.
 Passing Multiple Arguments
 --------------------------
 
-.. versionadded:: 0.4
+.. versionadded:: 0.5
 
 You can pass multiple arguments to the django-tinycontent template
 tags, like this::
