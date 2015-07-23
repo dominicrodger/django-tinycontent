@@ -42,6 +42,17 @@ django-tinycontent supports all versions of Django from 1.5 to
 Changelog
 =========
 
+v0.5.0
+------
+
+* Add support for multiple arguments to both the ``tinycontent`` and
+  the ``tinycontent_simple`` template tags. See the documentation
+  about :ref:`multiple-arguments`.
+* Start caching database queries - fetching a TinyContent block by
+  name (as the template tags do), will only hit the database the
+  first time that content block is loaded (unless the content block
+  is changed).
+
 v0.4.0
 ------
 
