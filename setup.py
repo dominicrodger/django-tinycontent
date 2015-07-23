@@ -45,6 +45,7 @@ setup(
         "Programming Language :: Python :: 3.4",
     ],
     tests_require=(
+        "mock==1.0.1",
         "pytest==2.7.1",
         "pytest-cov==1.8.1",
         "pytest-django==2.8.0",

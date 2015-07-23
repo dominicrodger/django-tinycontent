@@ -9,6 +9,10 @@ v0.4.0
   about :ref:`multiple-arguments`.
 * Require at least django-autoslug 1.8.0, to fix a warning about
   unapplied migrations.
+* Start caching database queries - fetching a TinyContent block by
+  name (as the template tags do), will only hit the database the
+  first time that content block is loaded (unless the content block
+  is changed).
 
 v0.3.0
 ------

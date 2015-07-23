@@ -1,4 +1,5 @@
 import autoslug
+from django.core.cache import cache
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from tinycontent.conf import get_filter_list
@@ -24,7 +25,26 @@ class TinyContent(models.Model):
 
     @staticmethod
     def get_content_by_name(name):
-        return TinyContent.objects.get(name=name)
+        cache_key = TinyContent.get_cache_key(name)
+        obj = cache.get(cache_key)
+
+        if obj is None:
+            obj = TinyContent.objects.get(name=name)
+            cache.set(cache_key, obj)
+
+        return obj
+
+    @staticmethod
+    def get_cache_key(name):
+        return 'tinycontent_%s' % name
+
+    def delete(self, *args, **kwargs):
+        cache.delete(TinyContent.get_cache_key(self.name))
+        return super(TinyContent, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        cache.delete(TinyContent.get_cache_key(self.name))
+        return super(TinyContent, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Content block'
