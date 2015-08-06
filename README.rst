@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/dominicrodger/django-tinycontent.svg
+    :target: https://travis-ci.org/dominicrodger/django-tinycontent
+    
 django-tinycontent is a simple Django application for re-usable
 content blocks, much like `django-boxes`_.
 
