@@ -16,10 +16,14 @@ env:
   - TOX_ENV=py34-1.7.X
   - TOX_ENV=py34-1.6.X
   - TOX_ENV=py34-1.5.X
-  - TOX_ENV=coverage
   - TOX_ENV=docs
   - TOX_ENV=flake8
+
 install:
   - pip install tox --cache-dir $HOME/.pip-cache
+
 script:
   - tox -e $TOX_ENV
+
+after_success:
+  coveralls
