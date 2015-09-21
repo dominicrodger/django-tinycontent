@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v0.5.1
+------
+
+* Added a Polish translation and locale (thanks @ad-m).
+
 v0.5.0
 ------
 
