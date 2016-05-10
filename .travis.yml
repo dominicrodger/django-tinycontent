@@ -1,5 +1,5 @@
 language: python
-python: 2.7
+python: 3.5
 
 sudo: false
 
@@ -8,16 +8,30 @@ cache:
     - $HOME/.pip-cache/
 
 env:
+  - TOX_ENV=py27-master
+  - TOX_ENV=py27-1.9.X
   - TOX_ENV=py27-1.8.X
   - TOX_ENV=py27-1.7.X
   - TOX_ENV=py27-1.6.X
   - TOX_ENV=py27-1.5.X
+  - TOX_ENV=py34-master
+  - TOX_ENV=py34-1.9.X
   - TOX_ENV=py34-1.8.X
   - TOX_ENV=py34-1.7.X
   - TOX_ENV=py34-1.6.X
   - TOX_ENV=py34-1.5.X
+  - TOX_ENV=py35-master
+  - TOX_ENV=py35-1.9.X
+  - TOX_ENV=py35-1.8.X
   - TOX_ENV=docs
   - TOX_ENV=flake8
+
+matrix:
+  allow_failures:
+    - env: TOX_ENV=py27-master
+    - env: TOX_ENV=py34-master
+    - env: TOX_ENV=py35-master
+  fast_finish: true
 
 install:
   - pip install tox coveralls --cache-dir $HOME/.pip-cache
