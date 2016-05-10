@@ -1,4 +1,8 @@
 import django
+import pytest
+
+import mock
+from tinycontent.models import TinyContent
 
 # Django 1.5 doesn't have CaptureQueriesContext, and adding support
 # for checking query counts is irritating, so let's just skip those
@@ -8,10 +12,6 @@ SKIP_CACHE_TESTS = django.VERSION < (1, 6)
 if not SKIP_CACHE_TESTS:
     from django.db import DEFAULT_DB_ALIAS, connections
     from django.test.utils import CaptureQueriesContext
-
-import mock
-import pytest
-from tinycontent.models import TinyContent
 
 
 class FakeCache(object):
