@@ -50,5 +50,5 @@ setup(
         "pytest-cov==1.8.1",
         "pytest-django==2.8.0",
     ),
-    cmdclass = {'test': PyTest},
+    cmdclass={'test': PyTest},
 )

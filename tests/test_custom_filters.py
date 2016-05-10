@@ -1,13 +1,13 @@
 import os
-import pytest
 import sys
 
-# Needed for the custom filter tests
-sys.path.append(os.path.dirname(__file__))
-
+import pytest
 from django.core.exceptions import ImproperlyConfigured
 
 from .utils import render_template
+
+# Needed for the custom filter tests
+sys.path.append(os.path.dirname(__file__))
 
 
 @pytest.mark.django_db
