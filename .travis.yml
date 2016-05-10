@@ -29,6 +29,13 @@ env:
   - TOX_ENV=docs
   - TOX_ENV=flake8
 
+matrix:
+  allow_failures:
+    - env: TOX_ENV=py27-master
+    - env: TOX_ENV=py34-master
+    - env: TOX_ENV=py35-master
+  fast_finish: true
+
 install:
   - pip install tox coveralls --cache-dir $HOME/.pip-cache
 
