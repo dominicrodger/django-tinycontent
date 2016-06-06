@@ -11,3 +11,4 @@ build/
 .coverage
 test.db
 tests/testmedia/
+.cache/
