@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v0.6.0
+------
+
+* Compatibility changes for Django 1.10.
+
 v0.5.1
 ------
 
