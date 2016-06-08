@@ -1,8 +1,9 @@
 from django import template
-from django.template.loader import render_to_string
 from django.template.base import TemplateSyntaxError
 from django.utils.encoding import force_text
+from tinycontent.compat import render_to_string
 from tinycontent.models import TinyContent
+
 
 register = template.Library()
 
@@ -19,13 +20,21 @@ class TinyContentNode(template.Node):
         try:
             name = self.get_name(context)
             obj = TinyContent.get_content_by_name(name)
+            context.update(
+                {
+                    'obj': obj
+                }
+            )
             return render_to_string('tinycontent/tinycontent.html',
-                                    {'obj': obj},
                                     context)
         except TinyContent.DoesNotExist:
             rval = self.nodelist.render(context)
+            context.update(
+                {
+                    'name': name
+                }
+            )
             rval += render_to_string('tinycontent/tinycontent_add.html',
-                                     {'name': name},
                                      context)
             return rval
 
@@ -52,10 +61,18 @@ def tinycontent_simple(context, *args):
     content_name = u':'.join(map(force_text, args))
     try:
         obj = TinyContent.get_content_by_name(content_name)
+        context.update(
+            {
+                'obj': obj
+            }
+        )
         return render_to_string('tinycontent/tinycontent.html',
-                                {'obj': obj},
                                 context)
     except TinyContent.DoesNotExist:
+        context.update(
+            {
+                'name': content_name
+            }
+        )
         return render_to_string('tinycontent/tinycontent_add.html',
-                                {'name': content_name},
                                 context)
