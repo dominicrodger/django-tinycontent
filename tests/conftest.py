@@ -18,6 +18,15 @@ def simple_content():
 
 
 @pytest.fixture()
+def simple_content_with_space():
+    content, _ = TinyContent.objects.get_or_create(
+        name='foo bar',
+        content='This is a test with a space.'
+    )
+    return content
+
+
+@pytest.fixture()
 def split_content():
     content, _ = TinyContent.objects.get_or_create(
         name='foo:bar',

@@ -1,4 +1,6 @@
+import base64
 import django
+from django.utils import six
 
 
 if django.VERSION > (1, 8,):
@@ -43,3 +45,12 @@ else:
             "Using the request keyword argument requires Django >= 1.8"
         )
         return _render_to_string(template_name, context)
+
+
+def cache_safe_key(key):
+    if six.PY2:
+        return base64.b64encode(
+            key
+        )
+
+    return base64.b64encode(bytes(key, 'utf-8'))

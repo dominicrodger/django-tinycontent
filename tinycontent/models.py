@@ -3,6 +3,7 @@ from django.core.cache import cache
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from tinycontent.conf import get_filter_list
+from tinycontent.compat import cache_safe_key
 
 
 @python_2_unicode_compatible
@@ -36,7 +37,7 @@ class TinyContent(models.Model):
 
     @staticmethod
     def get_cache_key(name):
-        return 'tinycontent_%s' % name
+        return 'tinycontent_%s' % cache_safe_key(name)
 
     def delete(self, *args, **kwargs):
         cache.delete(TinyContent.get_cache_key(self.name))
