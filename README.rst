@@ -48,6 +48,12 @@ django-tinycontent supports all versions of Django from 1.5 to
 Changelog
 =========
 
+v0.6.1
+------
+
+* Modify cache name, to prevent warnings for non-ASCII characters or
+  whitespace (thanks @ad-m).
+
 v0.6.0
 ------
 
