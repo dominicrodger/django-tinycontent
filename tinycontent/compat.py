@@ -39,11 +39,11 @@ else:
         assert (
             using is None,
             "Multiple template engines requires Django >= 1.8"
-        )
+        )  # flake8: noqa
         assert (
             request is None,
             "Using the request keyword argument requires Django >= 1.8"
-        )
+        )  # flake8: noqa
         return _render_to_string(template_name, context)
 
 
