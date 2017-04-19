@@ -34,7 +34,7 @@ setup(
         "markdown",
     ],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        "Development Status :: 5 - Production/Stable",
         "Framework :: Django",
         "License :: OSI Approved :: BSD License",
         "Environment :: Web Environment",
