@@ -35,8 +35,8 @@ setup(
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
-        'Framework :: Django',
-        'License :: OSI Approved :: BSD License',
+        "Framework :: Django",
+        "License :: OSI Approved :: BSD License",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
