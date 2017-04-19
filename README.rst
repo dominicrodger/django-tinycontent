@@ -48,6 +48,13 @@ django-tinycontent supports all versions of Django from 1.5 to
 Changelog
 =========
 
+v0.7.0
+------
+
+* Compatibility changes for Django 1.11 - dropped support for
+  versions of Django earlier than 1.8, and Python 3.4 (Python 2.7 and
+  Python 3.5 are still supported).
+
 v0.6.1
 ------
 
