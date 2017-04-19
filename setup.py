@@ -29,7 +29,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        "Django>=1.4",
+        "Django>=1.8",
         "django-autoslug>=1.8.0",
         "markdown",
     ],
@@ -41,8 +41,7 @@ setup(
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
     ],
     tests_require=(
         "mock==2.0.0",

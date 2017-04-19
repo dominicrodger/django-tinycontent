@@ -26,7 +26,7 @@ class TinyContentNode(template.Node):
                 }
             )
             return render_to_string('tinycontent/tinycontent.html',
-                                    context)
+                                    context.flatten())
         except TinyContent.DoesNotExist:
             rval = self.nodelist.render(context)
             context.update(
@@ -35,7 +35,7 @@ class TinyContentNode(template.Node):
                 }
             )
             rval += render_to_string('tinycontent/tinycontent_add.html',
-                                     context)
+                                     context.flatten())
             return rval
 
 
@@ -54,7 +54,6 @@ def tinycontent(parser, token):
 
 @register.simple_tag(takes_context=True)
 def tinycontent_simple(context, *args):
-
     if not args:
         raise TemplateSyntaxError("'tinycontent' tag takes arguments.")
 
@@ -67,7 +66,7 @@ def tinycontent_simple(context, *args):
             }
         )
         return render_to_string('tinycontent/tinycontent.html',
-                                context)
+                                context.flatten())
     except TinyContent.DoesNotExist:
         context.update(
             {
@@ -75,4 +74,4 @@ def tinycontent_simple(context, *args):
             }
         )
         return render_to_string('tinycontent/tinycontent_add.html',
-                                context)
+                                context.flatten())
