@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v0.7.1
+------
+
+* Added migration required for Python 3 (thanks @markus-hinsche).
+
 v0.7.0
 ------
 

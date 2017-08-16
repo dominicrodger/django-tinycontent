@@ -48,6 +48,11 @@ django-tinycontent supports all versions of Django from 1.5 to
 Changelog
 =========
 
+v0.7.1
+------
+
+* Added migration required for Python 3 (thanks @markus-hinsche).
+
 v0.7.0
 ------
 
