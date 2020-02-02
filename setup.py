@@ -45,9 +45,9 @@ setup(
     ],
     tests_require=(
         "mock==2.0.0",
-        "pytest==2.9.1",
-        "pytest-cov==2.2.1",
-        "pytest-django==2.9.1",
+        "pytest==5.3.5",
+        "pytest-cov==2.8.1",
+        "pytest-django==3.8.0",
     ),
     cmdclass={'test': PyTest},
 )

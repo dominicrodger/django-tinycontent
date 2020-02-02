@@ -5,7 +5,7 @@ from tinycontent.models import TinyContentFileUpload
 fileupload_expression = re.compile(r'(@file:([A-Za-z0-9\-_]+))')
 
 
-class FileUploadMatch(object):
+class FileUploadMatch:
     def __init__(self, match):
         self.full = match[0]
         self.file = TinyContentFileUpload.objects.get(
