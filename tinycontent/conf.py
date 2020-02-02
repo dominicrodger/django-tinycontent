@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.utils import six
 from tinycontent.utils.importer import import_from_dotted_path
 
 
@@ -9,7 +8,7 @@ def get_filter_list():
     except AttributeError:
         return []
 
-    if isinstance(path_list, six.string_types):
+    if isinstance(path_list, str):
         path_list = [path_list, ]
 
     return [import_from_dotted_path(path) for path in path_list]

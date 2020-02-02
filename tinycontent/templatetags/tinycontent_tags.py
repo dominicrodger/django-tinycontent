@@ -1,7 +1,7 @@
 from django import template
 from django.template.base import TemplateSyntaxError
-from django.utils.encoding import force_text
-from tinycontent.compat import render_to_string
+from django.utils.encoding import force_str
+from django.template.loader import render_to_string
 from tinycontent.models import TinyContent
 
 
@@ -57,7 +57,7 @@ def tinycontent_simple(context, *args):
     if not args:
         raise TemplateSyntaxError("'tinycontent' tag takes arguments.")
 
-    content_name = u':'.join(map(force_text, args))
+    content_name = ':'.join(map(force_str, args))
     try:
         obj = TinyContent.get_content_by_name(content_name)
         context.update(

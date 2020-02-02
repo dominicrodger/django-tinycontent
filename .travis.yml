@@ -7,24 +7,46 @@ cache:
   directories:
     - $HOME/.pip-cache/
 
-env:
-  - TOX_ENV=py27-master
-  - TOX_ENV=py27-1.11.X
-  - TOX_ENV=py27-1.10.X
-  - TOX_ENV=py27-1.9.X
-  - TOX_ENV=py27-1.8.X
-  - TOX_ENV=py35-master
-  - TOX_ENV=py35-1.11.X
-  - TOX_ENV=py35-1.10.X
-  - TOX_ENV=py35-1.9.X
-  - TOX_ENV=py35-1.8.X
-  - TOX_ENV=docs
-  - TOX_ENV=flake8
-
 matrix:
+  include:
+  - env: TOX_ENV=py36-master
+    python: 3.6
+  - env: TOX_ENV=py36-2.0.x
+    python: 3.6
+  - env: TOX_ENV=py36-2.1.x
+    python: 3.6
+  - env: TOX_ENV=py36-2.2.x
+    python: 3.6
+  - env: TOX_ENV=py36-3.0.x
+    python: 3.6
+  - env: TOX_ENV=py37-master
+    python: 3.7
+  - env: TOX_ENV=py37-2.0.x
+    python: 3.7
+  - env: TOX_ENV=py37-2.1.x
+    python: 3.7
+  - env: TOX_ENV=py37-2.2.x
+    python: 3.7
+  - env: TOX_ENV=py37-3.0.x
+    python: 3.7
+  - env: TOX_ENV=py38-master
+    python: 3.8
+  - env: TOX_ENV=py38-2.0.x
+    python: 3.8
+  - env: TOX_ENV=py38-2.1.x
+    python: 3.8
+  - env: TOX_ENV=py38-2.2.x
+    python: 3.8
+  - env: TOX_ENV=py38-3.0.x
+    python: 3.8
   allow_failures:
-    - env: TOX_ENV=py27-master
     - env: TOX_ENV=py35-master
+    - env: TOX_ENV=py36-master
+      python: 3.6
+    - env: TOX_ENV=py37-master
+      python: 3.7
+    - env: TOX_ENV=py38-master
+      python: 3.8
   fast_finish: true
 
 install:

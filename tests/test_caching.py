@@ -14,7 +14,7 @@ if not SKIP_CACHE_TESTS:
     from django.test.utils import CaptureQueriesContext
 
 
-class FakeCache(object):
+class FakeCache:
     def __init__(self):
         self.items = {}
 
@@ -32,7 +32,7 @@ if not SKIP_CACHE_TESTS:
     class QueryCounter(CaptureQueriesContext):
         def __init__(self):
             conn = connections[DEFAULT_DB_ALIAS]
-            super(QueryCounter, self).__init__(conn)
+            super().__init__(conn)
 
         def num_queries(self):
             return len(self)
