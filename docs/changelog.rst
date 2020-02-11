@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+v0.8.0
+------
+
+* Update for recent Django versions, remove support for older
+  Django/Python versions. Supported Django versions are now 2.0 to
+  3.0, supported Python versions are Python 3.6, 3.7 and 3.8 (thanks
+  @ad-m).
+
 v0.7.1
 ------
 
