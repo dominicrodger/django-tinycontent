@@ -36,8 +36,7 @@ coverage:
 	coverage report -m
 
 release: clean lint testall
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	twine upload -r pypi dist/*
 
 sdist: clean
 	python setup.py sdist
