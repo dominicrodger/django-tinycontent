@@ -13,26 +13,24 @@ class PyTest(TestCommand):
 
     def run_tests(self):
         import pytest
+
         errno = pytest.main(self.test_args)
         sys.exit(errno)
 
 
 setup(
-    name='django-tinycontent',
+    name="django-tinycontent",
     version=tinycontent.__version__,
     description="A Django app for managing re-usable blocks of tiny content.",
-    long_description=open('README.rst').read(),
-    author='Dominic Rodger',
-    author_email='internet@dominicrodger.com',
-    url='http://github.com/dominicrodger/django-tinycontent',
-    license='BSD',
+    long_description=open("README.rst").read(),
+    long_description_content_type="text/x-rst",
+    author="Dominic Rodger",
+    author_email="internet@dominicrodger.com",
+    url="http://github.com/dominicrodger/django-tinycontent",
+    license="BSD",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=[
-        "Django>=2.0",
-        "django-autoslug>=1.8.0",
-        "markdown",
-    ],
+    install_requires=["Django>=2.0", "django-autoslug>=1.8.0", "markdown"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Framework :: Django",
@@ -49,5 +47,5 @@ setup(
         "pytest-cov==2.8.1",
         "pytest-django==3.8.0",
     ),
-    cmdclass={'test': PyTest},
+    cmdclass={"test": PyTest},
 )
