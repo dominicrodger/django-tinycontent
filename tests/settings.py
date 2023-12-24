@@ -9,7 +9,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'tinycontent',
+    'tinycontent.apps.TinyContentConfig',
 )
 
 ROOT_URLCONF = 'tests.urls'
@@ -30,3 +30,5 @@ TEMPLATES = [
         'APP_DIRS': True,
     },
 ]
+
+TINYCONTENT_VERBOSE_NAME = 'Custom Tiny Content'
