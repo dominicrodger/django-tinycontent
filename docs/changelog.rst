@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v0.9.0
+------
+
+* Update for recent Django versions (thanks to @ataylor32).
+
 v0.8.0
 ------
 

@@ -1,8 +1,7 @@
-.. image:: https://travis-ci.org/dominicrodger/django-tinycontent.svg
-    :target: https://travis-ci.org/dominicrodger/django-tinycontent
-
-.. image:: https://coveralls.io/repos/dominicrodger/django-tinycontent/badge.svg?branch=master&service=github
-    :target: https://coveralls.io/github/dominicrodger/django-tinycontent?branch=master
+*****
+WARNING: This code is entirely unsupported, 0.9.0 will be the last
+release of django-tinycontent.
+*****
 
 django-tinycontent is a simple Django application for re-usable
 content blocks, much like django-boxes.
